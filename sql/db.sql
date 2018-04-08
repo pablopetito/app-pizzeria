@@ -43,12 +43,14 @@ create table pizzas (
  , unique key (nombre) 
 );
 
+insert into pizzas(nombre) values ("Napolitana"), ("Muzzarella"), ("Fugazzeta");
+
 create table menues (
    pizza int
- , tamaño varchar(20) not null
+ , tamaño int not null
  , precio float
  , tiempo time
- , primary key (pizza)
+ , primary key (pizza, tamaño)
  , foreign key (pizza) references pizzas(id)
 );
 
