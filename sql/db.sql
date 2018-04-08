@@ -10,33 +10,31 @@ drop table if exists pedidos;
 drop table if exists clientes;
 
 create table clientes (
-   nro_cliente int auto_increment primary key
- , nombre varchar(50) not null
- , unique key (nombre)
+    nro_cliente int auto_increment primary key
+  , nombre varchar(50) not null
+  , unique key (nombre)
 );
 
 create table pedidos (
-	id int auto_increment primary key
-  ,	cliente int 
-  , fue_pedido_a_las datetime not null
-  , sera_entregado_a_las datetime not null
+    id int auto_increment primary key
+  , cliente int 
+  , pedido_a_las datetime not null
+  , entregado_a_las datetime not null
   , estado varchar(30) not null
-  , foreign key (id) 
-	references clientes(nro_cliente)
-	on update cascade
-	on delete restrict
+  , foreign key (cliente) 
+      references clientes(nro_cliente)
 );
 
 create table pedidos_pizzas (
-	pedido int
+    pedido int
   , pizza int
+  , tamaño varchar(10) not null
   , cantidad int not null
-  , tamaño varchar[10] not null
   , primary key (pedido, pizza)
   , foreign key (pedido)
-	references pedidos(id)
-	on update cascade
-	on delete restrict
+      references pedidos(id)
+  , foreign key (pizza)
+      references pizzas(id) 
 );
 
 create table pizzas (
