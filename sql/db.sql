@@ -2,7 +2,7 @@ create database if not exists pizzeria;
 
 use pizzeria;
 
-drop table if exsits facturas;
+drop table if exists facturas;
 drop table if exists menues;
 drop table if exists pizzas;
 drop table if exists pedidos_pizzas;
@@ -38,13 +38,19 @@ create table pedidos_pizzas (
 );
 
 create table pizzas (
-  -- cris
+   id int auto_increment primary key
+ , nombre varchar(50) not null
+ , unique key (nombre) 
 );
 
 create table menues (
-  -- cris
+   pizza int
+ , tamaño varchar(20) not null
+ , precio float
+ , tiempo time
+ , primary key (pizza)
+ , foreign key (pizza) references pizzas(id)
 );
-
 
 create table facturas (
   -- andres
