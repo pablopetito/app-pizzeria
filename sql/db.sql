@@ -55,5 +55,9 @@ create table menues (
 );
 
 create table facturas (
-  -- andres
+  total int
+ ,pedido int
+ ,cliente int
+ ,foreign key (cliente) references clientes(nro_cliente)
+ ,foreign key (pedido) references pedidos(id)
 );
