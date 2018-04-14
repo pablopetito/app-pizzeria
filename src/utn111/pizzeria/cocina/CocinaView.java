@@ -1,5 +1,7 @@
 package utn111.pizzeria.cocina;
 
-public class CocinaView {
+import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
+public class CocinaView extends JFrame {
 }
