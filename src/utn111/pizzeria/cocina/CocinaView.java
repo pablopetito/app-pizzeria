@@ -3,6 +3,9 @@ package utn111.pizzeria.cocina;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 @SuppressWarnings("serial")
 public class CocinaView extends JFrame {
@@ -16,7 +19,33 @@ public class CocinaView extends JFrame {
     JButton botonActualizar = new JButton("Actualizar");
     botonActualizar.setBounds(800, 600, 100, 30);
     panel.add(botonActualizar);
+           
+    JScrollPane scrollLista = new JScrollPane();
+    scrollLista.setBounds(20, 120,400, 300);
+    
+    // CODIGO DE PRUEBA  - PROVISORIO 
+    String titulos[] = { "Cant.", "Detalle" };
+    String[][] pedidos = new String[3][2];
+    pedidos [0][0] = "1";
+    pedidos [0][1] = "Muzzarella";
+    pedidos [1][0] = "2";
+    pedidos [1][1] = "Fugazza con queso";
+    pedidos [2][0] = "1";
+    pedidos [2][1] = "Napolitana";
+    // FIN DE CODIGO DE PRUEBA
+            
+    JTable tablaPedidos = new JTable(pedidos, titulos);
+    tablaPedidos.setEnabled(false);
+    TableColumnModel modeloColumnas = tablaPedidos.getColumnModel();
 
+    tablaPedidos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    modeloColumnas.getColumn(0).setPreferredWidth(50);
+    modeloColumnas.getColumn(1).setPreferredWidth(347);
+
+    scrollLista.setViewportView(tablaPedidos);
+    
+    panel.add(scrollLista);    
+    
     panel.setLayout(null);
 
     add(panel);
