@@ -43,7 +43,11 @@ create table pizzas (
  , unique key (nombre) 
 );
 
-insert into pizzas(nombre) values ("Napolitana"), ("Muzzarella"), ("Fugazzeta");
+insert into pizzas (id, nombre)
+  values (1, "Napolitana")
+       , (2, "Muzzarella")
+       , (3, "Fugazzeta")
+;
 
 create table menues (
    pizza int
@@ -53,6 +57,18 @@ create table menues (
  , primary key (pizza, tamaño)
  , foreign key (pizza) references pizzas(id)
 );
+
+insert into menues(pizza, tamaño, precio, tiempo)
+  values (1, 8, 10.00, "00:07:10")
+       , (1, 10, 13.50, "00:08:10")
+       , (1, 12, 15.00, "00:09:10")
+       , (2, 8, 12.50, "00:07:10")
+       , (2, 10, 15.50, "00:08:10")
+       , (2, 12, 17.00, "00:09:10")
+       , (3, 8, 15.00, "00:07:10")
+       , (3, 10, 18.50, "00:08:10")
+       , (3, 12, 20.00, "00:09:10")
+;
 
 create table facturas (
   total int
