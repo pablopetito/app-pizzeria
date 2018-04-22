@@ -23,17 +23,9 @@ public class CocinaView extends JFrame {
     JScrollPane scrollLista = new JScrollPane();
     scrollLista.setBounds(20, 120,400, 300);
     
-    // CODIGO DE PRUEBA  - PROVISORIO 
     String titulos[] = { "Cant.", "Detalle" };
     String[][] pedidos = new String[3][2];
-    pedidos [0][0] = "1";
-    pedidos [0][1] = "Muzzarella";
-    pedidos [1][0] = "2";
-    pedidos [1][1] = "Fugazza con queso";
-    pedidos [2][0] = "1";
-    pedidos [2][1] = "Napolitana";
-    // FIN DE CODIGO DE PRUEBA
-            
+    
     JTable tablaPedidos = new JTable(pedidos, titulos);
     tablaPedidos.setEnabled(false);
     TableColumnModel modeloColumnas = tablaPedidos.getColumnModel();
