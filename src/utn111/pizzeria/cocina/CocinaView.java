@@ -12,44 +12,44 @@ public class CocinaView extends JFrame {
 
   public CocinaView() {
 
-	initVentana();
-	initPanelListadoPedidos();
-	
+    initVentana();
+    initPanelListadoPedidos();
+
   }
-  
+
   public void initVentana() {
 
     this.setBounds(300, 50, 1000, 700);
-  
+
   }
 
   public void initPanelListadoPedidos() {
-	  
+
     final JPanel panel = new JPanel();
 
     panel.add(crearBotonActualizar());
-    
+
     panel.add(crearTablaPedidos());
-    
+
     panel.setLayout(null);
 
     add(panel);
-    
+
   }
-  
+
   private static JButton crearBotonActualizar() {
-	  
+
     JButton botonActualizar = new JButton("Actualizar");
     botonActualizar.setBounds(800, 600, 100, 30);
-    
+
     return botonActualizar;
-    
+
   }
-  
+
   private static JScrollPane crearTablaPedidos() {
 
     JScrollPane scrollLista = new JScrollPane();
-    scrollLista.setBounds(20, 120,400, 300);
+    scrollLista.setBounds(20, 120, 400, 300);
 
     String titulos[] = { "Cant.", "Detalle" };
     String[][] pedidos = new String[3][2];
@@ -64,7 +64,7 @@ public class CocinaView extends JFrame {
 
     scrollLista.setViewportView(tablaPedidos);
 
-    return scrollLista;    
+    return scrollLista;
 
   }
 
