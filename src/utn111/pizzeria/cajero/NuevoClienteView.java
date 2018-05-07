@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class NuevoClienteView extends JFrame {
     public NuevoClienteView(){
-        this.setBounds(300, 50, 1000, 700);
+        setBounds(300, 50, 1000, 700);
 
         final JPanel panel = new JPanel();
 
