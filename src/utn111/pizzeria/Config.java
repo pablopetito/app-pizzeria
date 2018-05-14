@@ -15,12 +15,12 @@ public class Config {
     final FileInputStream is = new FileInputStream(arch);
     ps = new Properties();
 
-      try {
-        ps.load(is);
-      }
-      catch (IOException e) {
-       throw new RuntimeException(e);
-      }
+    try {
+      ps.load(is);
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public String getString(String key) {;
