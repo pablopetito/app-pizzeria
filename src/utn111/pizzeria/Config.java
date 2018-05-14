@@ -12,8 +12,8 @@ public class Config {
 
   public Config (String arch) throws FileNotFoundException {
 
-      ps = new Properties();
-      final FileInputStream is = new FileInputStream(arch);
+    final FileInputStream is = new FileInputStream(arch);
+    ps = new Properties();
 
       try {
         ps.load(is);
