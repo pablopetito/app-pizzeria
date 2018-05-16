@@ -1,14 +1,11 @@
 package utn111.pizzeria.modelo.dao;
 
-public class PedidosPizzas {
+public class PedidoPizza {
 
   private int pedido;
   private int pizza;
   private String tamaño;
   private int cantidad;
-
-  public PedidosPizzas() {
-  }
 
   public int getPedido() {
     return pedido;

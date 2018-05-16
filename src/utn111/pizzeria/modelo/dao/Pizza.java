@@ -1,12 +1,9 @@
 package utn111.pizzeria.modelo.dao;
 
-public class Pizzas {
+public class Pizza {
 
   private int id;
   private String nombre;
-
-  public Pizzas() {
-  }
 
   public int getId() {
     return id;

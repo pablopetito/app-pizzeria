@@ -2,15 +2,12 @@ package utn111.pizzeria.modelo.dao;
 
 import java.time.Duration;
 
-public class Menues {
+public class Menu {
 
   private int pizza;
   private int tamaño;
   private float precio;
   private Duration tiempoPreparacion;
-
-  public Menues() {
-  }
 
   public int getPizza() {
     return pizza;

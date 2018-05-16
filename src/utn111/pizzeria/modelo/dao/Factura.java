@@ -1,12 +1,9 @@
 package utn111.pizzeria.modelo.dao;
 
-public class Facturas {
+public class Factura {
   private int cliente;
   private int pedido;
   private float total;
-
-  public Facturas() {
-    }
 
   public int getCliente() {
     return cliente;

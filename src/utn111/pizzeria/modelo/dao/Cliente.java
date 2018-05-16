@@ -1,19 +1,16 @@
 package utn111.pizzeria.modelo.dao;
 
-public class Clientes {
+public class Cliente {
 
-  private int nro_cliente;
+  private int nroCliente;
   private String nombre;
   
-  public Clientes () {
-  }
-
   public int getNroCliente() {
-    return nro_cliente;
+    return nroCliente;
   }
 
-  public void setNroCliente(int nro_cliente) {
-      this.nro_cliente = nro_cliente;
+  public void setNroCliente(int nroCliente) {
+      this.nroCliente = nroCliente;
     }
 
   public String getNombre() {
