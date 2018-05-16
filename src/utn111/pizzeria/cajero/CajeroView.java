@@ -9,13 +9,13 @@ public class CajeroView extends JFrame {
     final JPanel allPanelsContainer = createAllElementsContainer();
 
     //UPPER CONTAINER
-    final JPanel upperContainer = initUpperContainer();
+    final JPanel upperContainer = createUpperContainer();
 
     //MIDDLE CONTAINER
-    final JPanel middleContainer = initMiddleContainer();
+    final JPanel middleContainer = createMiddleContainer();
 
     //LOWER CONTAINER
-    final JPanel lowerContainer = initLowerContainer();
+    final JPanel lowerContainer = createLowerContainer();
 
     //Set components
     allPanelsContainer.add(upperContainer);
@@ -24,6 +24,11 @@ public class CajeroView extends JFrame {
     add(allPanelsContainer);
   }
 
+  /**
+   * Crea el contenedor principal, le setea el tamaño y el LM y lo devuelve.
+   *
+   * @return el contenedor principal de la ventana Cajero
+   */
   private JPanel createAllElementsContainer(){
     final JPanel allPanelsContainer = new JPanel();
     allPanelsContainer.setSize(500, 400);
@@ -38,12 +43,18 @@ public class CajeroView extends JFrame {
     return container;
   }
 
-  private JPanel initUpperContainer() {
+  /**
+   * Crea el contenedor superior y los elementos del mismo.
+   *
+   * @return el contenedor. Que posee ya los componentes y los paneles hijos.
+   */
+  private JPanel createUpperContainer() {
     final JPanel upperContainer = createMainContainers();
     upperContainer.setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
     String[] listaClientes = {}; //contiene los clientes de dropClientes.
     JComboBox<String> dropClientes = new JComboBox<>(listaClientes);
+    dropClientes.setPreferredSize(new Dimension(100,20));
     gbc.fill = GridBagConstraints.WEST;
     gbc.ipady = 40;
     JButton boton = new JButton();
@@ -52,13 +63,23 @@ public class CajeroView extends JFrame {
     return  upperContainer;
   }
 
-  private JPanel initMiddleContainer() {
+  /**
+   * Crea el contenedor central y los elementos del mismo.
+   *
+   * @return el contenedor, con los elementos y los panales hijos.
+   */
+  private JPanel createMiddleContainer() {
     final JPanel middleContainer = createMainContainers();
     //Estructura base para agregar proximas funcionalidades.
     return middleContainer;
   }
 
-  private JPanel initLowerContainer() {
+  /**
+   * Crea el contenedor inferior y los elementos del mismo.
+   *
+   * @return el contenedor, con los elementos y los panales hijos.
+   */
+  private JPanel createLowerContainer() {
     final JPanel lowerContainer = createMainContainers();
     //Estructura base para agregar proximas funcionalidades.
     return lowerContainer;
