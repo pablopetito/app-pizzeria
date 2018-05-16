@@ -53,7 +53,7 @@ create table menues (
    pizza int
  , tamaño int not null
  , precio float
- , tiempo time
+ , tiempo_preparacion time
  , primary key (pizza, tamaño)
  , foreign key (pizza) references pizzas(id)
 );
