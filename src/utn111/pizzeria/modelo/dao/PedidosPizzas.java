@@ -1,13 +1,13 @@
 package utn111.pizzeria.modelo.dao;
 
-public class Pedidos_pizzas {
+public class PedidosPizzas {
 
   private int pedido;
   private int pizza;
-  private String tamaño;
+  private String tamaÃ±o;
   private int cantidad;
 
-  public Pedidos_pizzas() {
+  public PedidosPizzas() {
   }
 
   public int getPedido() {
@@ -26,12 +26,12 @@ public class Pedidos_pizzas {
     this.pizza = pizza;
   }
 
-  public String getTamaño() {
-    return tamaño;
+  public String getTamaÃ±o() {
+    return tamaÃ±o;
   }
 
-  public void setTamaño(String tamaño) {
-    this.tamaño = tamaño;
+  public void setTamaÃ±o(String tamaÃ±o) {
+    this.tamaÃ±o = tamaÃ±o;
   }
 
   public int getCantidad() {

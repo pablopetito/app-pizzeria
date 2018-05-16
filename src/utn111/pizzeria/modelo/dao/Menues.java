@@ -1,13 +1,13 @@
 package utn111.pizzeria.modelo.dao;
 
-import java.util.Date;
+import java.time.Duration;
 
 public class Menues {
 
   private int pizza;
-  private int tamaño;
+  private int tamaÃ±o;
   private float precio;
-  private Date tiempo; // VERIFICAR TIPO DE DATO
+  private Duration tiempoPreparacion;
 
   public Menues() {
   }
@@ -20,12 +20,12 @@ public class Menues {
     this.pizza = pizza;
   }
 
-  public int getTamaño() {
-    return tamaño;
+  public int getTamaÃ±o() {
+    return tamaÃ±o;
   }
 
-  public void setTamaño(int tamaño) {
-    this.tamaño = tamaño;
+  public void setTamaÃ±o(int tamaÃ±o) {
+    this.tamaÃ±o = tamaÃ±o;
   }
 
   public float getPrecio() {
@@ -36,11 +36,11 @@ public class Menues {
     this.precio = precio;
   }
 
-  public Date getTiempo() {
-    return tiempo;
+  public Duration getTiempoPreparacion() {
+    return tiempoPreparacion;
   }
 
-  public void setTiempo(Date tiempo) {
-    this.tiempo = tiempo;
+  public void setTiempoPreparacion(Duration tiempoPreparacion) {
+    this.tiempoPreparacion = tiempoPreparacion;
   }
 }
