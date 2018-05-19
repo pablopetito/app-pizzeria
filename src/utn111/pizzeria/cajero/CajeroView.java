@@ -34,7 +34,7 @@ public class CajeroView extends JFrame {
   }
 
   /**
-   * Crea el contenedor principal, le setea el tamaÃ±o y el LM y lo devuelve.
+   * Crea el contenedor principal, le setea el tamaño y el LM y lo devuelve.
    *
    * @return el contenedor principal de la ventana Cajero
    */
