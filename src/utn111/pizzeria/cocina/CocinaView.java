@@ -6,66 +6,52 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 @SuppressWarnings("serial")
 public class CocinaView extends JFrame {
 
   public CocinaView() {
-
     initVentana();
     initPanelListadoPedidos();
-
   }
 
-  public void initVentana() {
-
+  private void initVentana() {
     this.setBounds(300, 50, 1000, 700);
-
   }
 
-  public void initPanelListadoPedidos() {
-
+  private void initPanelListadoPedidos() {
     final JPanel panel = new JPanel();
-
+    panel.setLayout(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 3;
+    gbc.weightx = 1;
+    gbc.weighty = 1;
+    panel.add(crearTablaPedidos(), gbc);
     panel.add(crearBotonActualizar());
-
-    panel.add(crearTablaPedidos());
-
-    panel.setLayout(null);
-
     add(panel);
-
   }
 
   private static JButton crearBotonActualizar() {
-
     JButton botonActualizar = new JButton("Actualizar");
-    botonActualizar.setBounds(800, 600, 100, 30);
-
     return botonActualizar;
-
   }
 
   private static JScrollPane crearTablaPedidos() {
-
     JScrollPane scrollLista = new JScrollPane();
-    scrollLista.setBounds(20, 120, 400, 300);
-
-    String titulos[] = { "Cant.", "Detalle" };
+    String[] titulos = { "Cant.", "Detalle" };
     String[][] pedidos = new String[3][2];
-
     JTable tablaPedidos = new JTable(pedidos, titulos);
     tablaPedidos.setEnabled(false);
     TableColumnModel modeloColumnas = tablaPedidos.getColumnModel();
-
-    tablaPedidos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     modeloColumnas.getColumn(0).setPreferredWidth(50);
     modeloColumnas.getColumn(1).setPreferredWidth(347);
-
     scrollLista.setViewportView(tablaPedidos);
-
     return scrollLista;
-
   }
 
 }
