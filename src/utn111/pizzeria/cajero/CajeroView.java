@@ -72,7 +72,8 @@ public class CajeroView extends JFrame {
     upperContainer.add(boton);
     boton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        getVentana().setVisible(true);
+        new NuevoClienteView().setVisible(true);
+        ;
       }
     });
     return upperContainer;
@@ -98,9 +99,5 @@ public class CajeroView extends JFrame {
     final JPanel lowerContainer = createMainContainers();
     // Estructura base para agregar proximas funcionalidades.
     return lowerContainer;
-  }
-
-  public static JFrame getVentana() {
-    return new NuevoClienteView();
   }
 }
