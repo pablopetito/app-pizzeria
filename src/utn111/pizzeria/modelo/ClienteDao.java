@@ -1,6 +1,6 @@
-package utn111.pizzeria.modelo.dao;
+package utn111.pizzeria.modelo;
 
-public class Cliente {
+public class ClienteDao {
 
   private int nroCliente;
   private String nombre;

@@ -1,6 +1,6 @@
-package utn111.pizzeria.modelo.dao;
+package utn111.pizzeria.modelo;
 
-public class Pizza {
+public class PizzaDao {
 
   private int id;
   private String nombre;

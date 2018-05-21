@@ -1,6 +1,6 @@
-package utn111.pizzeria.modelo.dao;
+package utn111.pizzeria.modelo;
 
-public class Factura {
+public class FacturaDao {
   private int cliente;
   private int pedido;
   private float total;

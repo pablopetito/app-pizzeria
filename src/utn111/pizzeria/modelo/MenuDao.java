@@ -1,8 +1,8 @@
-package utn111.pizzeria.modelo.dao;
+package utn111.pizzeria.modelo;
 
 import java.time.Duration;
 
-public class Menu {
+public class MenuDao {
 
   private int pizza;
   private int tamaño;
