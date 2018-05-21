@@ -1,6 +1,5 @@
 package utn111.pizzeria.cajero;
 
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,22 +9,24 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class CajeroView extends JFrame {
   public CajeroView() {
     final JPanel allPanelsContainer = createAllElementsContainer();
 
-    //UPPER CONTAINER
+    // UPPER CONTAINER
     final JPanel upperContainer = createUpperContainer();
 
-    //MIDDLE CONTAINER
+    // MIDDLE CONTAINER
     final JPanel middleContainer = createMiddleContainer();
 
-    //LOWER CONTAINER
+    // LOWER CONTAINER
     final JPanel lowerContainer = createLowerContainer();
 
-    //Set components
+    // Set components
     allPanelsContainer.add(upperContainer);
     allPanelsContainer.add(middleContainer);
     allPanelsContainer.add(lowerContainer);
@@ -37,7 +38,7 @@ public class CajeroView extends JFrame {
    *
    * @return el contenedor principal de la ventana Cajero
    */
-  private JPanel createAllElementsContainer(){
+  private JPanel createAllElementsContainer() {
     final JPanel allPanelsContainer = new JPanel();
     allPanelsContainer.setSize(500, 400);
     setSize(allPanelsContainer.getSize());
@@ -47,7 +48,8 @@ public class CajeroView extends JFrame {
 
   private JPanel createMainContainers() {
     final JPanel container = new JPanel();
-    container.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()));
+    container.setBorder(
+        BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()));
     return container;
   }
 
@@ -60,15 +62,21 @@ public class CajeroView extends JFrame {
     final JPanel upperContainer = createMainContainers();
     upperContainer.setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
-    String[] listaClientes = {}; //contiene los clientes de dropClientes.
+    String[] listaClientes = {}; // contiene los clientes de dropClientes.
     JComboBox<String> dropClientes = new JComboBox<>(listaClientes);
-    dropClientes.setPreferredSize(new Dimension(100,20));
+    dropClientes.setPreferredSize(new Dimension(100, 20));
     gbc.fill = GridBagConstraints.WEST;
     gbc.ipady = 40;
-    JButton boton = new JButton();
-    upperContainer.add(dropClientes,gbc);
+    JButton boton = new JButton("Nuevo Cliente");
+    upperContainer.add(dropClientes, gbc);
     upperContainer.add(boton);
-    return  upperContainer;
+    boton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        new NuevoClienteView().setVisible(true);
+        ;
+      }
+    });
+    return upperContainer;
   }
 
   /**
@@ -78,7 +86,7 @@ public class CajeroView extends JFrame {
    */
   private JPanel createMiddleContainer() {
     final JPanel middleContainer = createMainContainers();
-    //Estructura base para agregar proximas funcionalidades.
+    // Estructura base para agregar proximas funcionalidades.
     return middleContainer;
   }
 
@@ -89,7 +97,7 @@ public class CajeroView extends JFrame {
    */
   private JPanel createLowerContainer() {
     final JPanel lowerContainer = createMainContainers();
-    //Estructura base para agregar proximas funcionalidades.
+    // Estructura base para agregar proximas funcionalidades.
     return lowerContainer;
   }
 }
