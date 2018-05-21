@@ -30,7 +30,7 @@ public class Pedido {
     return pedidoALas;
   }
 
-  public void setPedido_a_las(Date pedidoALas) {
+  public void setPedidoALas(Date pedidoALas) {
     this.pedidoALas = pedidoALas;
   }
 
@@ -38,7 +38,7 @@ public class Pedido {
     return entregadoALas;
   }
 
-  public void setEntregado_a_las(Date entregadoALas) {
+  public void setEntregadoALas(Date entregadoALas) {
     this.entregadoALas = entregadoALas;
   }
 
