@@ -1,8 +1,8 @@
-package utn111.pizzeria.modelo.dao;
+package utn111.pizzeria.modelo;
 
 import java.util.Date;
 
-public class Pedido {
+public class PedidoDao {
 
   private int id;
   private int cliente;
