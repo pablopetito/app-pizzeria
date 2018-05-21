@@ -77,7 +77,7 @@ public class CajeroView extends JFrame {
     dropClientes.setRenderer(new Renderer() {
 
     });
-    dropClientes.setPreferredSize(new Dimension(100, 20));
+    dropClientes.setPreferredSize(new Dimension(200, 20));
     gbc.fill = GridBagConstraints.WEST;
     gbc.ipady = 40;
     JButton boton = new JButton("Nuevo Cliente");
