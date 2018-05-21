@@ -1,10 +1,15 @@
 package utn111.pizzeria.cajero;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import utn111.pizzeria.modelo.dao.Cliente;
+
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -62,8 +67,16 @@ public class CajeroView extends JFrame {
     final JPanel upperContainer = createMainContainers();
     upperContainer.setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
-    String[] listaClientes = {}; // contiene los clientes de dropClientes.
-    JComboBox<String> dropClientes = new JComboBox<>(listaClientes);
+    Cliente[] clientes = new Cliente[] {
+
+        cliente(1, "Doña Josefa"),
+        cliente(2, "Juanca Daver"), cliente(3, "Alex Plosivo"),
+        cliente(4, "Omar Tillado"), cliente(5, "Victor Ticolis")
+    };
+    JComboBox<Cliente> dropClientes = new JComboBox<>(clientes);
+    dropClientes.setRenderer(new Renderer() {
+
+    });
     dropClientes.setPreferredSize(new Dimension(100, 20));
     gbc.fill = GridBagConstraints.WEST;
     gbc.ipady = 40;
@@ -77,6 +90,13 @@ public class CajeroView extends JFrame {
       }
     });
     return upperContainer;
+  }
+
+  private Cliente cliente(int nroCliente, String nombre) {
+    Cliente c = new Cliente();
+    c.setNroCliente(nroCliente);
+    c.setNombre(nombre);
+    return c;
   }
 
   /**
@@ -99,5 +119,22 @@ public class CajeroView extends JFrame {
     final JPanel lowerContainer = createMainContainers();
     // Estructura base para agregar proximas funcionalidades.
     return lowerContainer;
+  }
+
+  public class Renderer extends DefaultListCellRenderer {
+
+    public Component getListCellRendererComponent(
+        JList<?> cliente,
+        Object value,
+        int nroCliente,
+        boolean isSelected,
+        boolean cellHasFocus) {
+      if (value instanceof Cliente) {
+        value = ((Cliente) value).getNombre();
+      }
+      super.getListCellRendererComponent(cliente, value, nroCliente,
+          cellHasFocus, cellHasFocus);
+      return this;
+    }
   }
 }
