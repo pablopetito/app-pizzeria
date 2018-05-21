@@ -15,6 +15,14 @@ create table clientes (
   , unique key (nombre)
 );
 
+insert into clientes
+  values (1, 'Doña Josefa')
+       , (2, 'Juanca Daver')
+       , (3, 'Alex Plosivo')
+       , (4, 'Omar Tillado')
+       , (5, 'Victor Ticolis')
+;
+
 create table pedidos (
     id int auto_increment primary key
   , cliente int 
