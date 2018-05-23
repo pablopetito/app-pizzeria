@@ -1,6 +1,7 @@
 package utn111.pizzeria.db;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SelectBuilder {
@@ -11,7 +12,8 @@ public class SelectBuilder {
   private final List<String> condicionesWhere = new ArrayList<>();
   private final List<Object> orden = new ArrayList<>();
   private final List<Object> groups = new ArrayList<>();
-  private String valorLimit= "";
+  private int valorLimit1;
+  private int valorLimit2;
 
   public SelectBuilder(String from, Object... columnas) {
     tabla = from;
@@ -29,9 +31,7 @@ public class SelectBuilder {
   }
 
   public SelectBuilder orderBy(Object... valoresOrden) {
-    for (Object valor : valoresOrden) {
-      orden.add(valor);
-    }
+    Collections.addAll(orden, valoresOrden);
     return this;
   }
 
@@ -42,32 +42,30 @@ public class SelectBuilder {
     return this;
   }
 
-  public SelectBuilder limit(String valorLimit) {
-    this.valorLimit = valorLimit;
+  public SelectBuilder limit(int valor1, int valor2 ) {
+    this.valorLimit1 = valor1;
+    this.valorLimit2 = valor2;
     return this;
   }
 
   public Query build() {
     String sql = String.format("select %s from %s%s%s%s%s", buildColumnas(), tabla,
-        buildWhere(), buildGroupBy(), buildLimit(), buildOrderBy());
+        buildWhere(), buildGroup(), buildLimit(), buildOrden());
     return new Query(sql, params.toArray());
   }
 
-  private String buildColumnas() {
-    String sql = "*";
-    boolean primero = true;
-    for (Object col : column) {
-      if (primero) {
-        primero = false;
-        sql = "";
-      } else {
-        sql = sql + ", ";
-      }
-      sql = sql + String.format("%s", col);
-    }
-    return sql;
+  private String buildGroup() {
+    return buildGroupOrdenBy(" group by", groups, "", " %s", " ,");
   }
-  
+
+  private String buildOrden() {
+    return buildGroupOrdenBy(" order by", orden, "", " %s", ",");
+  }
+
+  private String buildColumnas() {
+    return buildGroupOrdenBy("", column, "*", "%s", ", ");
+  }
+
   private String buildWhere() {
     String sql = "";
     String andWhere = "where";
@@ -78,40 +76,27 @@ public class SelectBuilder {
     return sql;
   }
 
-  private String buildOrderBy() {
-    String sql = "";
+  private String buildGroupOrdenBy(String opcion, List<Object> valores, String sqlInicial, String tplItems, String coma) {
+    String sql = sqlInicial;
     boolean primero = true;
-    for (Object ord : orden) {
+    for (Object valor : valores) {
       if (primero) {
-        sql = " order by";
+        sql = opcion;
         primero = false;
       } else {
-        sql = sql + ",";
+        sql = sql + coma;
       }
-      sql = sql + String.format(" %s", ord);
-    }
-    return sql;
-  }
-
-  private String buildGroupBy() {
-    String sql = "";
-    boolean primero = true;
-    for (Object grup : groups) {
-      if (primero) {
-        sql = " group by";
-        primero = false;
-      } else {
-        sql = sql + ",";
-      }
-      sql = sql + String.format(" %s", grup);
+      sql = sql + String.format(tplItems, valor);
     }
     return sql;
   }
 
   private String buildLimit() {
     String sql = "";
-    if (valorLimit == "") return sql; 
-    sql = " limit " + valorLimit;
+    if (valorLimit1 == 0) return sql;
+    sql = String.format(" limit %s", valorLimit1);
+    if (valorLimit2 == 0) return sql;
+    sql = sql + String.format(", %s", valorLimit2);
     return sql; 
   }
 }
