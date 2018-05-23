@@ -18,7 +18,7 @@ public class Query {
     return params;
   }
 
-  public static SelectBuilder select(String from) {
-    return new SelectBuilder(from);
+  public static SelectBuilder select(String from, Object... columnas ) {
+    return new SelectBuilder(from, columnas);
   }
 }

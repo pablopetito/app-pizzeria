@@ -6,67 +6,87 @@ import java.util.List;
 public class SelectBuilder {
 
   private final String tabla;
+  private final List<Object> column = new ArrayList<>();
   private final List<Object> params = new ArrayList<>();
-  private String sql;
+  private final List<String> condis = new ArrayList<>();
+  private final List<Object> orden = new ArrayList<>();
 
-  public SelectBuilder(String from) {
+  public SelectBuilder(String from, Object... columnas) {
     tabla = from;
+    for (Object col : columnas) {
+      column.add(col);
+    }
   }
 
-  public SelectBuilder where(String campo, Object valor) {
-    params.add("where");
-    params.add(campo);
-    params.add(valor);
+  public SelectBuilder where(String condicion, Object... valores) {
+    condis.add(condicion);
+    for (Object val : valores) {
+      params.add(val);
+    }
     return this;
   }
 
-  public SelectBuilder groupBy(Object columna) {
-    params.add("group");
-    params.add(columna);
+  public SelectBuilder orderBy(Object... valoresOrden) {
+    for (Object val : valoresOrden) {
+      orden.add(val);
+    }
     return this;
   }
 
   public Query build() {
-    sql = String.format("select * from %s", tabla);
-    int indice = buscarParamsWhere();
-
-    if (indice >= 0) {
-      sql = sql + String.format(" where %s = %s", params.get(indice + 1),
-          params.get(indice + 2));
+    String sqlWhere = "";
+    String andWhere = "where";
+    for (String cond : condis) {
+      sqlWhere = sqlWhere + String.format(" %s (%s)", andWhere, cond);
+      andWhere = "and";
     }
-
-    indice = buscarParamsGroup();
-    if (indice >= 0) {
-      sql = sql + String.format(" group by %s", params.get(indice + 1));
-    }
-
+    String sql = String.format("select %s from %s%s", buildColumnas(), tabla,
+        sqlWhere);
+    sql = sql + buildOrderBy();
     return new Query(sql, params.toArray());
   }
 
-  public int buscarParamsWhere() {
-    int indice = -1;
-    if (params.size() == 0) return indice;
-
-    for (int indx = 0; indx < params.size(); indx++) {
-      if (params.get(indx).equals("where")) return indice = indx;
+  private String buildColumnas() {
+    String sql = "*";
+    boolean primero = true;
+    for (Object col : column) {
+      if (primero) {
+        primero = false;
+        sql = "";
+      }
+      else {
+        sql = sql + ", ";
+      }
+      sql = sql + String.format("%s", col);
     }
-
-    return indice;
+    return sql;
   }
 
-  public int buscarParamsGroup() {
-    int indice = -1;
-    if (params.size() == 0) return indice;
-    for (int indx = 0; indx < params.size(); indx++) {
-
-      if (params.get(indx).equals("group")) return indice = indx;
-
+  private String buildOrderBy() {
+    String sql = "";
+    boolean primero = true;
+    for (Object ord : orden) {
+      if (hayAscDesc(ord)) {
+        sql = sql + String.format(" %s", ord, ", ");
+        continue;
+      }
+      else {
+        sql = sql + ",";
+      }
+      if (primero) {
+        sql = " order by";
+        primero = false;
+      }
+      sql = sql + String.format(" %s", ord);
     }
-    return indice;
+    return sql;
+  }
+
+  private boolean hayAscDesc(Object ord) {
+    return (ord.equals("asc") || ord.equals("ASC") || ord.equals("desc")
+        || ord.equals("DESC"));
   }
 }
-// referencia propia - provisoria
-// WHERE CON a = ? and b = ?
-// WHERE CON a = ? or b = ?
-// VER SELECT a,b from tabla
+// FALTAN limit, Having
 // VER SELECT COUNT(*) from tabla
+// VER as "ALIAS" tabla, columnas
