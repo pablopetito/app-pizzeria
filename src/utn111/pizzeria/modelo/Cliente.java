@@ -1,6 +1,6 @@
 package utn111.pizzeria.modelo;
 
 public interface Cliente {
-  public int nroCliente();
+  public int getNroCliente();
   public String getNombre();
 }
