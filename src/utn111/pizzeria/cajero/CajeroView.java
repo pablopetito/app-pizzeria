@@ -1,6 +1,7 @@
 package utn111.pizzeria.cajero;
 
 import javax.swing.BorderFactory;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -75,6 +76,19 @@ public class CajeroView extends JFrame {
     };
     JComboBox<Cliente> dropClientes = new JComboBox<>(clientes);
     dropClientes.setRenderer(new Renderer() {
+      public Component getListCellRendererComponent(
+          JList<?> cliente,
+          Object value,
+          int nroCliente,
+          boolean isSelected,
+          boolean cellHasFocus) {
+        if (value instanceof Cliente) {
+          value = ((Cliente) value).getNombre();
+        }
+        super.getListCellRendererComponent(cliente, value, nroCliente,
+            cellHasFocus, cellHasFocus);
+        return this;
+      }
 
     });
     dropClientes.setPreferredSize(new Dimension(200, 20));
@@ -121,20 +135,6 @@ public class CajeroView extends JFrame {
     return lowerContainer;
   }
 
-  public class Renderer extends DefaultListCellRenderer {
+  public static class Renderer extends DefaultListCellRenderer {}
 
-    public Component getListCellRendererComponent(
-        JList<?> cliente,
-        Object value,
-        int nroCliente,
-        boolean isSelected,
-        boolean cellHasFocus) {
-      if (value instanceof Cliente) {
-        value = ((Cliente) value).getNombre();
-      }
-      super.getListCellRendererComponent(cliente, value, nroCliente,
-          cellHasFocus, cellHasFocus);
-      return this;
-    }
-  }
 }
