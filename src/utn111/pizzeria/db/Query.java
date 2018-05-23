@@ -1,4 +1,4 @@
-package bd;
+package utn111.pizzeria.db;
 
 public class Query {
 

@@ -1,0 +1,103 @@
+package utn111.pizzeria.db;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class SelectBuilderTest {
+
+  @Test public void testQuerySelect() {
+    String sql = "select * from tabla as alias";
+    Query query = Query.select("tabla as alias").build();
+    assertEquals(sql, query.getSql());
+  }
+
+  @Test public void testQuerySelectConColumna() {
+    String sql = "select a as alias, b as alias2 from tabla as alias";
+    Query query = Query.select("tabla as alias", "a as alias", "b as alias2").build();
+    assertEquals(sql, query.getSql());
+  }
+
+  @Test public void testQuerySelectWehereIsNull() {
+    final String sql = "select * from tabla as alias where (campo is null)";
+    final Object[] params = new Object[] {};
+    Query query = Query.select("tabla as alias")
+        .where("campo is null")
+        .build();
+    assertEquals(sql, query.getSql());
+    assertArrayEquals(params, query.getParams());
+  }
+
+  @Test public void testQuerySelectWehereIsNullmasAnd() {
+    final String sql = "select * from tabla as alias where (campo is null) and (campo = ?)";
+    final Object[] params = new Object[] { 123 };
+    Query query = Query.select("tabla as alias")
+        .where("campo is null")
+        .where("campo = ?", 123)
+        .build();
+    assertEquals(sql, query.getSql());
+    assertArrayEquals(params, query.getParams());
+  }
+
+  @Test public void testQuerySelectWehereIsNullmasAndAnd() {
+    final String sql = "select * from tabla as alias where (campo is null) and (campo = ?) and (campo = ? or campo = ?)";
+    final Object[] params = new Object[] { 123, "567", true };
+    Query query = Query.select("tabla as alias")
+        .where("campo is null")
+        .where("campo = ?", 123)
+        .where("campo = ? or campo = ?", "567", true)
+        .build();
+    assertEquals(sql, query.getSql());
+    assertArrayEquals(params, query.getParams());
+  }
+
+  @Test public void testQuerySelectConOrden() {
+    String sql = "select * from tabla as alias order by 1 asc, columna desc";
+    Query query = Query.select("tabla as alias")
+        .orderBy("1 asc", "columna desc")
+        .build();
+    assertEquals(sql, query.getSql());
+  }
+
+  @Test public void testQuerySelectConWhereConOrden() {
+    String sql = "select * from tabla as alias where (campo = ?) order by colum1 desc, colum2 desc";
+    final Object[] params = new Object[] { 456 };
+    Query query = Query.select("tabla as alias")
+        .where("campo = ?", 456)
+        .orderBy("colum1 desc", "colum2 desc")
+        .build();
+    assertEquals(sql, query.getSql());
+    assertArrayEquals(params, query.getParams());
+  }
+
+  @Test public void testQuerySelectConLimit() {
+    String sql = "select * from tabla as alias limit 5";
+    Query query = Query.select("tabla as alias")
+        .limit("5")
+        .build();
+    assertEquals(sql, query.getSql());
+  }
+
+  @Test public void testQuerySelectConLimitDesde() {
+    String sql = "select * from tabla as alias limit 5,30";
+    Query query = Query.select("tabla as alias")
+        .limit("5,30")
+        .build();
+    assertEquals(sql, query.getSql());
+  }
+
+  @Test public void testQuerySelectConGroup() {
+    String sql = "select * from tabla as alias group by column";
+    Query query = Query.select("tabla as alias")
+        .groupBy("column")
+        .build();
+    assertEquals(sql, query.getSql());
+  }
+
+  @Test public void testQuerySelectConGroupPorDosColum() {
+    String sql = "select * from tabla as alias group by column, column2";
+    Query query = Query.select("tabla as alias")
+        .groupBy("column, column2")
+        .build();
+    assertEquals(sql, query.getSql());
+  }
+}
