@@ -17,16 +17,12 @@ public class SelectBuilder {
 
   public SelectBuilder(String from, Object... columnas) {
     tabla = from;
-    for (Object col : columnas) {
-      column.add(col);
+    Collections.addAll(column, columnas);
     }
-  }
 
   public SelectBuilder where(String condicion, Object... valores) {
     condicionesWhere.add(condicion);
-    for (Object valor : valores) {
-      params.add(valor);
-    }
+    Collections.addAll(params, valores);
     return this;
   }
 
@@ -36,9 +32,7 @@ public class SelectBuilder {
   }
 
   public SelectBuilder groupBy(Object... valoresGrupo) {
-    for (Object valor : valoresGrupo) {
-      groups.add(valor);
-    }
+    Collections.addAll(groups, valoresGrupo);
     return this;
   }
 
