@@ -6,18 +6,21 @@ import static org.junit.Assert.assertEquals;
 
 public class ClienteImplTest {
   @Test
-  public void clienteImplAlmacenaNombreCorrectamente() {
-    ClienteDao clienteDao = new ClienteDao();
-    clienteDao.setNombre("pepe");
-    ClienteImpl clienteImpl = new ClienteImpl(clienteDao);
+  public void testClienteImplAlmacenaNombreCorrectamente() {
+    ClienteImpl clienteImpl = new ClienteImpl(createDao());
     assertEquals("pepe",clienteImpl.getNombre());
   }
 
   @Test
-  public void clienteImplAlmacenaNroClienteCorrectamente() {
+  public void testClienteImplAlmacenaNroClienteCorrectamente() {
+    ClienteImpl clienteImpl = new ClienteImpl(createDao());
+    assertEquals(11,clienteImpl.getNroCliente());
+  }
+
+  private ClienteDao createDao() {
     ClienteDao clienteDao = new ClienteDao();
     clienteDao.setNroCliente(11);
-    ClienteImpl clienteImpl = new ClienteImpl(clienteDao);
-    assertEquals(11,clienteImpl.getNroCliente());
+    clienteDao.setNombre("pepe");
+    return clienteDao;
   }
 }
