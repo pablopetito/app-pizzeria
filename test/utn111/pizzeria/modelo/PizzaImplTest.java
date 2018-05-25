@@ -5,15 +5,16 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 public class PizzaImplTest {
+
   @Test
   public void testClienteImplAlmacenaNombreCorrectamente() {
-    PizzaImpl pizzaImpl = new PizzaImpl(createDao());
-    assertEquals("muzzarella",pizzaImpl.getNombre());
+    final String nombre = createPizza().getNombre();
+    assertEquals("muzzarella", nombre);
   }
 
-  private PizzaDao createDao() {
+  private PizzaImpl createPizza() {
     PizzaDao pizzaDao = new PizzaDao();
     pizzaDao.setNombre("muzzarella");
-    return pizzaDao;
+    return new PizzaImpl(pizzaDao);
   }
 }
