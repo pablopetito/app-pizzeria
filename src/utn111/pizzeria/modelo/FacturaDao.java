@@ -1,6 +1,7 @@
 package utn111.pizzeria.modelo;
 
 public class FacturaDao {
+
   private int cliente;
   private int pedido;
   private float total;
