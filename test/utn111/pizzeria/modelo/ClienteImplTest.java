@@ -5,22 +5,23 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ClienteImplTest {
+
   @Test
   public void testClienteImplAlmacenaNombreCorrectamente() {
-    ClienteImpl clienteImpl = new ClienteImpl(createDao());
-    assertEquals("pepe",clienteImpl.getNombre());
+    final String nombre = createCliente().getNombre();
+    assertEquals("pepe", nombre);
   }
 
   @Test
   public void testClienteImplAlmacenaNroClienteCorrectamente() {
-    ClienteImpl clienteImpl = new ClienteImpl(createDao());
-    assertEquals(11,clienteImpl.getNroCliente());
+    final int nroCliente = createCliente().getNroCliente();
+    assertEquals(11, nroCliente);
   }
 
-  private ClienteDao createDao() {
+  private ClienteImpl createCliente() {
     ClienteDao clienteDao = new ClienteDao();
     clienteDao.setNroCliente(11);
     clienteDao.setNombre("pepe");
-    return clienteDao;
+    return new ClienteImpl(clienteDao);
   }
 }
