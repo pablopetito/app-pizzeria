@@ -1,10 +1,16 @@
 package utn111.pizzeria.cajero;
 
 import javax.swing.BorderFactory;
+
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import utn111.pizzeria.modelo.dao.Cliente;
+
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -62,9 +68,27 @@ public class CajeroView extends JFrame {
     final JPanel upperContainer = createMainContainers();
     upperContainer.setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
-    String[] listaClientes = {}; // contiene los clientes de dropClientes.
-    JComboBox<String> dropClientes = new JComboBox<>(listaClientes);
-    dropClientes.setPreferredSize(new Dimension(100, 20));
+    Cliente[] clientes = new Cliente[] {
+    };
+    JComboBox<Cliente> dropClientes = new JComboBox<>(clientes);
+    dropClientes.setRenderer(new Renderer() {
+       public Component getListCellRendererComponent(
+          JList<?> list,
+          Object value,
+          int nroCliente,
+          boolean isSelected,
+          boolean cellHasFocus) {
+
+        Cliente cliente = (Cliente) value;
+
+        if (cliente != null) {
+          setText(cliente.getNombre());
+        }
+        return this;
+      }
+
+    });
+    dropClientes.setPreferredSize(new Dimension(200, 20));
     gbc.fill = GridBagConstraints.WEST;
     gbc.ipady = 40;
     JButton boton = new JButton("Nuevo Cliente");
@@ -77,6 +101,13 @@ public class CajeroView extends JFrame {
       }
     });
     return upperContainer;
+  }
+
+  private Cliente cliente(int nroCliente, String nombre) {
+    Cliente c = new Cliente();
+    c.setNroCliente(nroCliente);
+    c.setNombre(nombre);
+    return c;
   }
 
   /**
@@ -100,4 +131,7 @@ public class CajeroView extends JFrame {
     // Estructura base para agregar proximas funcionalidades.
     return lowerContainer;
   }
+
+  public static class Renderer extends DefaultListCellRenderer {}
+
 }
