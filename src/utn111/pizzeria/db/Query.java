@@ -21,4 +21,8 @@ public class Query {
   public static SelectBuilder select(String from) {
     return new SelectBuilder(from);
   }
+
+  public static DeleteBuilder delete(String from) {
+    return new DeleteBuilder(from);
+  }
 }
