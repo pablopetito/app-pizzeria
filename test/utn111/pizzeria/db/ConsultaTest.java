@@ -1,4 +1,4 @@
-package test;
+package utn111.pizzeria.db;
 
 import static org.junit.Assert.assertEquals;
 import java.sql.Connection;

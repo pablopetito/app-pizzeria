@@ -1,4 +1,4 @@
-package test;
+package utn111.pizzeria.db;
 
 import org.junit.Test;
 import utn111.pizzeria.db.Conexion;
