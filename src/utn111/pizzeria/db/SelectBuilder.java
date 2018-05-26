@@ -8,7 +8,7 @@ public class SelectBuilder extends QueryBuilder {
 
   private final List<Object> groups = new ArrayList<>();
 
-  public SelectBuilder(String from) {
+  SelectBuilder(String from) {
     super(from);
   }
 

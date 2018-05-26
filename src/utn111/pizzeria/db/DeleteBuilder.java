@@ -2,7 +2,7 @@ package utn111.pizzeria.db;
 
 public class DeleteBuilder extends QueryBuilder {
 
-  public DeleteBuilder(String from) {
+  DeleteBuilder(String from) {
     super(from);
   }
 
