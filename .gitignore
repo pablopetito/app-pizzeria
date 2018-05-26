@@ -1,11 +1,12 @@
 # proyecto
 bin/
 lib/
+*.jar
 
 # eclipse
+.settings/
 .classpath
 .project
-.settings/
 
 # idea
 .idea/
