@@ -6,7 +6,6 @@ import java.util.List;
 
 public class SelectBuilder extends QueryBuilder {
 
-  private final List<String> condicionesWhere = new ArrayList<>();
   private final List<Object> orden = new ArrayList<>();
   private final List<Object> groups = new ArrayList<>();
   private int limit;
@@ -22,8 +21,7 @@ public class SelectBuilder extends QueryBuilder {
   }
 
   public SelectBuilder where(String condicion, Object... valores) {
-    condicionesWhere.add(condicion);
-    Collections.addAll(params, valores);
+    addWhere(condicion, valores);
     return this;
   }
 
@@ -72,16 +70,6 @@ public class SelectBuilder extends QueryBuilder {
 
   private String buildOrden() {
     return buildLista(orden, " order by ", "");
-  }
-
-  private String buildWhere() {
-    String sql = "";
-    String andWhere = "where";
-    for (String cond : condicionesWhere) {
-      sql = sql+ String.format(" %s (%s)", andWhere, cond);
-      andWhere = "and";
-    }
-    return sql;
   }
 
   private String buildLimit() {

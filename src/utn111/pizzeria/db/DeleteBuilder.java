@@ -6,12 +6,18 @@ public class DeleteBuilder extends QueryBuilder {
     super(from);
   }
 
+  public DeleteBuilder where(String condicion, Object... valores) {
+    addWhere(condicion, valores);
+    return this;
+  }
+
   @Override
   protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
     sb.append(buildQueryType());
     sb.append('*');
     sb.append(buildFrom());
+    sb.append(buildWhere());
     return sb.toString();
   }
 
