@@ -76,17 +76,18 @@ public class CajeroView extends JFrame {
     };
     JComboBox<Cliente> dropClientes = new JComboBox<>(clientes);
     dropClientes.setRenderer(new Renderer() {
-      public Component getListCellRendererComponent(
-          JList<?> cliente,
+       public Component getListCellRendererComponent(
+          JList<?> list,
           Object value,
           int nroCliente,
           boolean isSelected,
           boolean cellHasFocus) {
-        if (value instanceof Cliente) {
-          value = ((Cliente) value).getNombre();
+
+        Cliente cliente = (Cliente) value;
+
+        if (cliente != null) {
+          setText(cliente.getNombre());
         }
-        super.getListCellRendererComponent(cliente, value, nroCliente,
-            cellHasFocus, cellHasFocus);
         return this;
       }
 
