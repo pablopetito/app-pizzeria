@@ -69,10 +69,6 @@ public class CajeroView extends JFrame {
     upperContainer.setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
     Cliente[] clientes = new Cliente[] {
-
-        cliente(1, "Doña Josefa"),
-        cliente(2, "Juanca Daver"), cliente(3, "Alex Plosivo"),
-        cliente(4, "Omar Tillado"), cliente(5, "Victor Ticolis")
     };
     JComboBox<Cliente> dropClientes = new JComboBox<>(clientes);
     dropClientes.setRenderer(new Renderer() {
