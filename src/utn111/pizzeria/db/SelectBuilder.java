@@ -48,8 +48,7 @@ public class SelectBuilder extends QueryBuilder {
   @Override
   protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
-    sb.append(buildQueryType());
-    sb.append(buildColumnas());
+    sb.append(buildSelect());
     sb.append(buildFrom());
     sb.append(buildWhere());
     sb.append(buildGroup());
@@ -58,9 +57,8 @@ public class SelectBuilder extends QueryBuilder {
     return sb.toString();
   }
 
-  @Override
-  protected String buildQueryType () {
-    return "select ";
+  private String buildSelect() {
+    return String.format("select %s ", buildColumnas());
   }
 
   private String buildGroup() {

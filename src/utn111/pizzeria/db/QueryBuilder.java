@@ -32,12 +32,8 @@ public abstract class QueryBuilder {
 
   protected abstract String buildSql();
 
-  protected String buildQueryType() {
-    throw new UnsupportedOperationException();
-  }
-
   protected String buildFrom () {
-    return String.format(" from %s", table);
+    return String.format("from %s", table);
   }
 
   protected String buildColumnas() {

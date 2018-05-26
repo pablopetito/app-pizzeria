@@ -19,16 +19,11 @@ public class DeleteBuilder extends QueryBuilder {
   @Override
   protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
-    sb.append(buildQueryType());
-    sb.append('*');
+    sb.append("delete ");
     sb.append(buildFrom());
     sb.append(buildWhere());
     sb.append(buildOrderBy());
     return sb.toString();
   }
 
-  @Override
-  protected String buildQueryType () {
-    return "delete ";
-  }
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class DeleteBuilderTest {
 
   @Test public void testSoloTabla() {
-    final String expected = "delete * from tabla";
+    final String expected = "delete from tabla";
     final String sql = Query.delete("tabla")
         .build()
         .getSql()
@@ -16,7 +16,7 @@ public class DeleteBuilderTest {
   }
 
   @Test public void testWhereSimple() {
-    final String expected = "delete * from tabla where (id = ?)";
+    final String expected = "delete from tabla where (id = ?)";
     final String sql = Query
         .delete("tabla")
         .where("id = ?", 123)
@@ -27,7 +27,7 @@ public class DeleteBuilderTest {
   }
 
   @Test public void testOrderBy() {
-    final String expected = "delete * from tabla order by fecha desc";
+    final String expected = "delete from tabla order by fecha desc";
     final String sql = Query
         .delete("tabla")
         .orderBy("fecha desc")
@@ -38,7 +38,7 @@ public class DeleteBuilderTest {
   }
   
   @Test public void testWhereOrderBy() {
-    final String expected = "delete * from tabla where (id = ?) order by fecha desc";
+    final String expected = "delete from tabla where (id = ?) order by fecha desc";
     final String sql = Query
         .delete("tabla")
         .where("id = ?", 123)
