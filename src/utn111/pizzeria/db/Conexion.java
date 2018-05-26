@@ -15,7 +15,19 @@ public class Conexion {
     }
   }
   
+  public Conexion(String host) {
+    try {
+      cnn = DriverManager.getConnection(host);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public Consulta preparar(String sql) {
     return new Consulta(cnn, sql);
+  }
+
+  public int execute(String sql) {
+    return preparar(sql).execute();
   }
 }

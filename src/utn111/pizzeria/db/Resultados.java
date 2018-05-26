@@ -3,16 +3,18 @@ package utn111.pizzeria.db;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
+import java.sql.Types;
 
 public class Resultados {
+  
   private final ResultSet rs;
   private final ResultSetMetaData data;
   
   public Resultados(ResultSet rs) {
     this.rs = rs;
     try {
-      this.data = rs.getMetaData();
+      data = rs.getMetaData();
+        rs.next();
     }
     catch (SQLException e) {
       throw new RuntimeException(e);
@@ -23,10 +25,12 @@ public class Resultados {
    * @return retorna `true` si quedan mas registros por leer
    */
   public boolean hashNext(){
-    while(next()) {
-      return true;
+    try {
+        return !rs.isAfterLast();
     }
-    return false;
+    catch (SQLException e) {
+      return false;
+    }
   }
   
   /**
@@ -56,6 +60,7 @@ public class Resultados {
   
   public boolean getBoolean(int index) {
     try {
+      validarColumna(index, Types.BIT, Types.SMALLINT, Types.INTEGER, Types.BIGINT, Types.BOOLEAN);
       String nomb = data.getColumnName(index);
       return rs.getBoolean(nomb);
     }
@@ -75,6 +80,7 @@ public class Resultados {
   
   public int getInteger(int index) {
     try {
+      validarColumna(index, Types.INTEGER, Types.SMALLINT);
       String nomb = data.getColumnName(index);
       return rs.getInt(nomb);
     }
@@ -82,7 +88,7 @@ public class Resultados {
       throw new RuntimeException(e);
     }
   }
-  
+
   public float getFloat(String column) {
     try {
       return rs.getFloat(column);
@@ -94,6 +100,7 @@ public class Resultados {
   
   public float getFloat(int index) {
     try {
+      validarColumna(index, Types.FLOAT);
       String nomb = data.getColumnName(index);
       return rs.getFloat(nomb);
     }
@@ -101,6 +108,7 @@ public class Resultados {
       throw new RuntimeException(e);
     }
   }
+  
   public String getString(String column) {
     try {
       return rs.getString(column);
@@ -109,13 +117,24 @@ public class Resultados {
       throw new RuntimeException(e);
     }
   }
+  
   public String getString(int index) {
     try {
+      validarColumna(index, Types.VARCHAR);
       String nomb = data.getColumnName(index);
       return rs.getString(nomb);
     }
     catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+  
+  private void validarColumna(int index, int... types) throws SQLException {
+    for(int type : types) {
+      if (data.getColumnType(index) == type) {
+        return;
+      }
+    }
+    throw new IllegalArgumentException();
   }
 }

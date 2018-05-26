@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Consulta {
+  
   private final PreparedStatement ps;
+  private int p = 1;
   
   public Consulta(Connection cnn, String sql) {
     try {
@@ -18,39 +20,40 @@ public class Consulta {
   }
   
   // Agregando parametros uno atras del otro
-  
   public Consulta param(String valor) {
     try {
-      ps.setString(0, valor);
+      ps.setString(p, valor);
     }
     catch (SQLException e) {
       throw new RuntimeException(e);
     }
+    p += 1;
     return this;
   }
   
   public Consulta param(int valor) {
     try {
-      ps.setInt(1, valor);
+      ps.setInt(p, valor);
     }
     catch (SQLException e) {
       throw new RuntimeException(e);
     }
+    p += 1;
     return this;
   }
   
   public Consulta param(float valor) {
     try {
-      ps.setFloat(3, valor);
+      ps.setFloat(p, valor);
     }
     catch (SQLException e) {
       throw new RuntimeException(e);
     }
+    p += 1;
     return this;
   }
   
   // Agregando parametros usando posicion
-  
   public Consulta param(int index, String valor) {
     try {
       ps.setString(index, valor);
