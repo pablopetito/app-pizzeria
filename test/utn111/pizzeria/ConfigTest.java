@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import org.junit.Test;
 import utn111.pizzeria.Config;
 
-public class TestConfig {
+public class ConfigTest {
 
   @Test(expected = FileNotFoundException.class) 
   public void testArchNoExiste() throws FileNotFoundException {
