@@ -1,6 +1,7 @@
 package utn111.pizzeria.db;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Test;
 
@@ -16,14 +17,37 @@ public class DeleteBuilderTest {
   }
 
   @Test public void testWhereSimple() {
-    final String expected = "delete from tabla where (id = ?)";
-    final String sql = Query
+    final String expectedSql = "delete from tabla where (id = ?)";
+    final Object[] expectedParams = new Object[] { 123 };
+    final Query query = Query
         .delete("tabla")
         .where("id = ?", 123)
         .build()
-        .getSql()
     ;
-    assertEquals(expected, sql);
+
+    final String sql = query.getSql();
+    final Object[] params = query.getParams();
+
+    assertEquals(expectedSql, sql);
+    assertArrayEquals(expectedParams, params);
+  }
+
+  @Test public void testWhereMultiple() {
+    final String expectedSql = "delete from tabla where (id = ?) and (foo is true) and (algo > ?)";
+    final Object[] expectedParams = new Object[] { 123, "otro" };
+    final Query query = Query
+        .delete("tabla")
+        .where("id = ?", 123)
+        .where("foo is true")
+        .where("algo > ?", "otro")
+        .build()
+    ;
+
+    final String sql = query.getSql();
+    final Object[] params = query.getParams();
+
+    assertEquals(expectedSql, sql);
+    assertArrayEquals(expectedParams, params);
   }
 
   @Test public void testOrderBy() {
