@@ -8,7 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import utn111.pizzeria.modelo.dao.Cliente;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -17,6 +16,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import utn111.pizzeria.modelo.ClienteDao;
 
 @SuppressWarnings("serial")
 public class CajeroView extends JFrame {
@@ -68,9 +69,8 @@ public class CajeroView extends JFrame {
     final JPanel upperContainer = createMainContainers();
     upperContainer.setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
-    Cliente[] clientes = new Cliente[] {
-    };
-    JComboBox<Cliente> dropClientes = new JComboBox<>(clientes);
+    ClienteDao[] clientes = new ClienteDao[0];
+    JComboBox<ClienteDao> dropClientes = new JComboBox<>(clientes);
     dropClientes.setRenderer(new Renderer() {
        public Component getListCellRendererComponent(
           JList<?> list,
@@ -79,7 +79,7 @@ public class CajeroView extends JFrame {
           boolean isSelected,
           boolean cellHasFocus) {
 
-        Cliente cliente = (Cliente) value;
+         ClienteDao cliente = (ClienteDao) value;
 
         if (cliente != null) {
           setText(cliente.getNombre());
@@ -101,13 +101,6 @@ public class CajeroView extends JFrame {
       }
     });
     return upperContainer;
-  }
-
-  private Cliente cliente(int nroCliente, String nombre) {
-    Cliente c = new Cliente();
-    c.setNroCliente(nroCliente);
-    c.setNombre(nombre);
-    return c;
   }
 
   /**
