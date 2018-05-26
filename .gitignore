@@ -1,4 +1,15 @@
+# proyecto
+bin/
+lib/
+*.jar
+
+# eclipse
+.settings/
 .classpath
 .project
-bin/
-*.jar
+
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws

@@ -15,6 +15,14 @@ create table clientes (
   , unique key (nombre)
 );
 
+insert into clientes
+  values (1, 'Doña Josefa')
+       , (2, 'Juanca Daver')
+       , (3, 'Alex Plosivo')
+       , (4, 'Omar Tillado')
+       , (5, 'Victor Ticolis')
+;
+
 create table pedidos (
     id int auto_increment primary key
   , cliente int 
@@ -53,19 +61,19 @@ create table menues (
    pizza int
  , tamaño int not null
  , precio float
- , tiempo time
+ , tiempo_preparacion time
  , primary key (pizza, tamaño)
  , foreign key (pizza) references pizzas(id)
 );
 
 insert into menues(pizza, tamaño, precio, tiempo)
-  values (1, 8, 10.00, "00:07:10")
+  values (1,  8, 10.00, "00:07:10")
        , (1, 10, 13.50, "00:08:10")
        , (1, 12, 15.00, "00:09:10")
-       , (2, 8, 12.50, "00:07:10")
+       , (2,  8, 12.50, "00:07:10")
        , (2, 10, 15.50, "00:08:10")
        , (2, 12, 17.00, "00:09:10")
-       , (3, 8, 15.00, "00:07:10")
+       , (3,  8, 15.00, "00:07:10")
        , (3, 10, 18.50, "00:08:10")
        , (3, 12, 20.00, "00:09:10")
 ;
