@@ -13,7 +13,9 @@ public class SelectBuilderTest {
 
   @Test public void testQuerySelectConColumna() {
     String sql = "select a as c1, b as c2 from tabla as t1";
-    Query query = Query.select("tabla as t1", "a as c1", "b as c2").build();
+    Query query = Query.select("tabla as t1")
+        .columnas("a as c1", "b as c2")
+        .build();
     assertEquals(sql, query.getSql());
   }
 
@@ -72,7 +74,7 @@ public class SelectBuilderTest {
   @Test public void testQuerySelectConLimit() {
     String sql = "select * from tabla as t1 limit 5";
     Query query = Query.select("tabla as t1")
-        .limit(5,0)
+        .limit(5)
         .build();
     assertEquals(sql, query.getSql());
   }
@@ -96,7 +98,7 @@ public class SelectBuilderTest {
   @Test public void testQuerySelectConGroupPorDosColum() {
     String sql = "select * from tabla as t1 group by column, column2";
     Query query = Query.select("tabla as t1")
-        .groupBy("column, column2")
+        .groupBy("column", "column2")
         .build();
     assertEquals(sql, query.getSql());
   }

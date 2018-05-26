@@ -15,10 +15,14 @@ public class SelectBuilder {
   private int limit;
   private int offset;
 
-  public SelectBuilder(String from, Object... columnas) {
+  public SelectBuilder(String from) {
     tabla = from;
-    Collections.addAll(column, columnas);
     }
+
+  public SelectBuilder columnas(Object... columnas) {
+    Collections.addAll(column,  columnas);
+    return this;
+  }
 
   public SelectBuilder where(String condicion, Object... valores) {
     condicionesWhere.add(condicion);
@@ -36,9 +40,14 @@ public class SelectBuilder {
     return this;
   }
 
-  public SelectBuilder limit(int limit, int offset ) {
+  public SelectBuilder limit(int limit, int offset) {
     this.limit = limit;
     this.offset = offset;
+    return this;
+  }
+
+  public SelectBuilder limit(int limit) {
+    this.limit = limit;
     return this;
   }
 
@@ -63,8 +72,8 @@ public class SelectBuilder {
     return "select ";
   }
 
-  private StringBuilder buildFrom () {
-    return new StringBuilder().append(" from ").append(tabla);
+  private String buildFrom () {
+    return " from " + (new StringBuilder().append(tabla));
   }
 
   private String buildGroup() {
@@ -83,7 +92,7 @@ public class SelectBuilder {
     String sql = "";
     String andWhere = "where";
     for (String cond : condicionesWhere) {
-      sql = sql + (new StringBuilder().append(" ").append(andWhere).append(" (").append(cond).append(")"));
+      sql = sql+ String.format(" %s (%s)", andWhere, cond);
       andWhere = "and";
     }
     return sql;
@@ -99,20 +108,20 @@ public class SelectBuilder {
       } else {
         sql = sql + ", ";
       }
-      sql = sql + (new StringBuilder().append(valor));
+      sql = sql + valor;
     }
     return sql;
   }
 
   private String buildLimit() {
-    String template;
+    final String template;
     if (limit <= 0) {
       template = "";
     } else if (offset <=0) {
-      template = " limit %d";
-      } else {
-        template = " limit %d, %d";
-        }
+             template = " limit %d";
+           } else {
+               template = " limit %d, %d";
+             }
     return String.format(template, limit, offset);
   }
 }
