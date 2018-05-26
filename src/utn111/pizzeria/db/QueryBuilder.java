@@ -11,6 +11,8 @@ public abstract class QueryBuilder {
   protected final List<Object> columns = new ArrayList<>();
   protected final List<String> where = new ArrayList<>();
   protected final List<Object> orderBy = new ArrayList<>();
+  protected int limit;
+  protected int offset;
 
   public QueryBuilder(final String table) {
     this.table = table;
@@ -56,6 +58,21 @@ public abstract class QueryBuilder {
 
   protected String buildOrderBy() {
     return buildLista(orderBy, " order by ", "");
+  }
+
+  protected String buildLimit() {
+
+    final String template;
+
+    if (limit <= 0) {
+      template = "";
+    } else if (offset <=0) {
+      template = " limit %d";
+    } else {
+      template = " limit %d, %d";
+    }
+
+    return String.format(template, limit, offset);
   }
 
   protected String buildLista(final List<Object> values,

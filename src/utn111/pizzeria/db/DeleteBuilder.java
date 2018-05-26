@@ -16,6 +16,22 @@ public class DeleteBuilder extends QueryBuilder {
     return this;
   }
 
+  public DeleteBuilder limit(int limit, int offset) {
+    this.limit = limit;
+    this.offset = offset;
+    return this;
+  }
+
+  public DeleteBuilder limit(int limit) {
+    this.limit = limit;
+    return this;
+  }
+
+  public DeleteBuilder offset(int offset) {
+    this.offset = offset;
+    return this;
+  }
+
   @Override
   protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
@@ -23,6 +39,7 @@ public class DeleteBuilder extends QueryBuilder {
     sb.append(buildFrom());
     sb.append(buildWhere());
     sb.append(buildOrderBy());
+    sb.append(buildLimit());
     return sb.toString();
   }
 

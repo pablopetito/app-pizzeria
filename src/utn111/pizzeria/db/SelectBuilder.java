@@ -7,8 +7,6 @@ import java.util.List;
 public class SelectBuilder extends QueryBuilder {
 
   private final List<Object> groups = new ArrayList<>();
-  private int limit;
-  private int offset;
 
   public SelectBuilder(String from) {
     super(from);
@@ -45,6 +43,11 @@ public class SelectBuilder extends QueryBuilder {
     return this;
   }
 
+  public SelectBuilder offset(int offset) {
+    this.offset = offset;
+    return this;
+  }
+
   @Override
   protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
@@ -63,17 +66,5 @@ public class SelectBuilder extends QueryBuilder {
 
   private String buildGroup() {
     return buildLista(groups, " group by ", "");
-  }
-
-  private String buildLimit() {
-    final String template;
-    if (limit <= 0) {
-      template = "";
-    } else if (offset <=0) {
-             template = " limit %d";
-           } else {
-               template = " limit %d, %d";
-             }
-    return String.format(template, limit, offset);
   }
 }
