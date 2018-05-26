@@ -10,33 +10,37 @@ import static junit.framework.TestCase.assertNotNull;
 public class MenuImplTest {
   @Test
   public void menuImplPuedeAlmacenarPizzaCorrectamente() {
-    MenuImpl menu = new MenuImpl(createMenuDao(),createPizzaImpl());
+    MenuImpl menu = createMenuImpl();
     assertNotNull(menu.getPizza());
   }
 
   @Test
   public void menuImplDevuelveNombrePizzaConValCorrecto() {
-    MenuImpl menu = new MenuImpl(createMenuDao(),createPizzaImpl());
-    assertEquals("muzzarella",menu.getNombrePizza());
+    MenuImpl menu = createMenuImpl();
+    assertEquals("muzzarella", menu.getNombrePizza());
   }
 
   @Test
   public void menuImplDevuelveTamañoPizzaConValCorrecto() {
-    MenuImpl menu = new MenuImpl(createMenuDao(),createPizzaImpl());
-    assertEquals(12,menu.getTamaño());
+    MenuImpl menu = createMenuImpl();
+    assertEquals(12, menu.getTamaño());
   }
 
   @Test
   public void menuImplDevuelveTiempoEsperaConValCorrecto() {
-    MenuImpl menu = new MenuImpl(createMenuDao(),createPizzaImpl());
-    assertEquals(Duration.ofMinutes(100),menu.getTiempoPreparacion());
+    MenuImpl menu = createMenuImpl();
+    assertEquals(Duration.ofMinutes(100), menu.getTiempoPreparacion());
   }
 
   @Test
   public void menuImplDevuelvePrecioConValCorrecto() {
-    MenuImpl menu = new MenuImpl(createMenuDao(),createPizzaImpl());
+    MenuImpl menu = createMenuImpl();
     final float expected = 200;
-    assertEquals(expected,menu.getPrecio());
+    assertEquals(expected, menu.getPrecio());
+  }
+
+  private MenuImpl createMenuImpl(){
+    return new MenuImpl(createMenuDao(), createPizzaImpl());
   }
 
   private MenuDao createMenuDao() {
