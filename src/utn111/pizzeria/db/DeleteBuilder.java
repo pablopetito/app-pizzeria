@@ -11,6 +11,11 @@ public class DeleteBuilder extends QueryBuilder {
     return this;
   }
 
+  public DeleteBuilder orderBy(String... columnas) {
+    addOrderBy(columnas);
+    return this;
+  }
+
   @Override
   protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
@@ -18,6 +23,7 @@ public class DeleteBuilder extends QueryBuilder {
     sb.append('*');
     sb.append(buildFrom());
     sb.append(buildWhere());
+    sb.append(buildOrderBy());
     return sb.toString();
   }
 

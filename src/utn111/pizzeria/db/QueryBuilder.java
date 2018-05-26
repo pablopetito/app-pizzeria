@@ -10,6 +10,7 @@ public abstract class QueryBuilder {
   protected final List<Object> params = new ArrayList<>();
   protected final List<Object> columns = new ArrayList<>();
   protected final List<String> where = new ArrayList<>();
+  protected final List<Object> orderBy = new ArrayList<>();
 
   public QueryBuilder(final String table) {
     this.table = table;
@@ -18,6 +19,10 @@ public abstract class QueryBuilder {
   protected void addWhere(String filter, Object... params) {
     where.add(filter);
     Collections.addAll(this.params, params);
+  }
+
+  protected void addOrderBy(String... columnas) {
+    Collections.addAll(orderBy, columnas);
   }
 
   public Query build() {
@@ -51,6 +56,10 @@ public abstract class QueryBuilder {
     }
 
     return sql.toString();
+  }
+
+  protected String buildOrderBy() {
+    return buildLista(orderBy, " order by ", "");
   }
 
   protected String buildLista(final List<Object> values,

@@ -6,7 +6,6 @@ import java.util.List;
 
 public class SelectBuilder extends QueryBuilder {
 
-  private final List<Object> orden = new ArrayList<>();
   private final List<Object> groups = new ArrayList<>();
   private int limit;
   private int offset;
@@ -25,8 +24,8 @@ public class SelectBuilder extends QueryBuilder {
     return this;
   }
 
-  public SelectBuilder orderBy(Object... valoresOrden) {
-    Collections.addAll(orden, valoresOrden);
+  public SelectBuilder orderBy(String... columnas) {
+    addOrderBy(columnas);
     return this;
   }
 
@@ -54,7 +53,7 @@ public class SelectBuilder extends QueryBuilder {
     sb.append(buildFrom());
     sb.append(buildWhere());
     sb.append(buildGroup());
-    sb.append(buildOrden());
+    sb.append(buildOrderBy());
     sb.append(buildLimit());
     return sb.toString();
   }
@@ -66,10 +65,6 @@ public class SelectBuilder extends QueryBuilder {
 
   private String buildGroup() {
     return buildLista(groups, " group by ", "");
-  }
-
-  private String buildOrden() {
-    return buildLista(orden, " order by ", "");
   }
 
   private String buildLimit() {
