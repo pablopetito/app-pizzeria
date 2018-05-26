@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SelectBuilder {
+public class SelectBuilder extends QueryBuilder {
 
-  private final String tabla;
-  private final List<Object> column = new ArrayList<>();
-  private final List<Object> params = new ArrayList<>();
   private final List<String> condicionesWhere = new ArrayList<>();
   private final List<Object> orden = new ArrayList<>();
   private final List<Object> groups = new ArrayList<>();
@@ -16,11 +13,11 @@ public class SelectBuilder {
   private int offset;
 
   public SelectBuilder(String from) {
-    tabla = from;
-    }
+    super(from);
+  }
 
   public SelectBuilder columnas(Object... columnas) {
-    Collections.addAll(column,  columnas);
+    Collections.addAll(columns,  columnas);
     return this;
   }
 
@@ -51,14 +48,10 @@ public class SelectBuilder {
     return this;
   }
 
-  public Query build() {
-    final String sql = buildSql();
-    return new Query(sql, params.toArray());
-  }
-
-  private String buildSql() {
+  @Override
+  protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
-    sb.append(buildQuery());
+    sb.append(buildQueryType());
     sb.append(buildColumnas());
     sb.append(buildFrom());
     sb.append(buildWhere());
@@ -68,24 +61,17 @@ public class SelectBuilder {
     return sb.toString();
   }
 
-  private String buildQuery () {
+  @Override
+  protected String buildQueryType () {
     return "select ";
   }
 
-  private String buildFrom () {
-    return " from " + (new StringBuilder().append(tabla));
-  }
-
   private String buildGroup() {
-    return buildGroupOrdenBy(" group by ", groups, "");
+    return buildLista(groups, " group by ", "");
   }
 
   private String buildOrden() {
-    return buildGroupOrdenBy(" order by ", orden, "");
-  }
-
-  private String buildColumnas() {
-    return buildGroupOrdenBy("", column, "*");
+    return buildLista(orden, " order by ", "");
   }
 
   private String buildWhere() {
@@ -94,21 +80,6 @@ public class SelectBuilder {
     for (String cond : condicionesWhere) {
       sql = sql+ String.format(" %s (%s)", andWhere, cond);
       andWhere = "and";
-    }
-    return sql;
-  }
-
-  private String buildGroupOrdenBy(String opcion, List<Object> valores, String sqlInicial) {
-    String sql = sqlInicial;
-    boolean primero = true;
-    for (Object valor : valores) {
-      if (primero) {
-        sql = opcion;
-        primero = false;
-      } else {
-        sql = sql + ", ";
-      }
-      sql = sql + valor;
     }
     return sql;
   }
