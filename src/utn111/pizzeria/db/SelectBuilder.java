@@ -12,8 +12,8 @@ public class SelectBuilder extends QueryBuilder {
     super(from);
   }
 
-  public SelectBuilder columnas(Object... columnas) {
-    Collections.addAll(columns,  columnas);
+  public SelectBuilder columnas(String... columnas) {
+    addColumns(columnas);
     return this;
   }
 

@@ -25,4 +25,8 @@ public class Query {
   public static DeleteBuilder delete(String from) {
     return new DeleteBuilder(from);
   }
+
+  public static InsertBuilder insert(String into) {
+    return new InsertBuilder(into);
+  }
 }

@@ -18,8 +18,16 @@ public abstract class QueryBuilder {
     this.table = table;
   }
 
+  public void addColumns(String... columnas) {
+    Collections.addAll(columns,  columnas);
+  }
+
   protected void addWhere(String filter, Object... params) {
     where.add(filter);
+    addParams(params);
+  }
+
+  protected void addParams(Object... params) {
     Collections.addAll(this.params, params);
   }
 
