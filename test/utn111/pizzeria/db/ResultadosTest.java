@@ -3,6 +3,7 @@ package utn111.pizzeria.db;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.junit.Test;
 
@@ -10,126 +11,129 @@ public class ResultadosTest {
 
   private static final float e = (float) 1e-10;
 
-  @Test public void testHashNext() throws Exception {
+  @Test public void testHashNext()  {
     assertEquals(true, resultados().hashNext());
   }
   
-  @Test public void testNext() throws Exception {
+  @Test public void testNext() {
     assertEquals(false, resultados().next());
   }
   
-  @Test public void testHashNextFalse() throws Exception {
+  @Test public void testHashNextFalse() {
     Resultados r = resultados();
     r.next();
     r.next();
     assertEquals(false, r.hashNext());
   }
   
-  @Test public void testNextFalse() throws Exception {
+  @Test public void testNextFalse() {
     Resultados r = resultados();
     r.next();
     assertEquals(false, r.next());
   }
   
   // Pruebo Metodos de Lectura de Datos Correctos
-  @Test public void testGetBooleanNombreTabla() throws Exception {
+  @Test public void testGetBooleanNombreTabla() {
     assertEquals(true, resultados().getBoolean("booleano"));
   }
   
-  @Test public void testGetBooleanNumTabla() throws Exception {
+  @Test public void testGetBooleanNumTabla() {
     assertEquals(true, resultados().getBoolean(4));
   }
   
-  @Test public void testGetIntNombreTabla() throws Exception {
+  @Test public void testGetIntNombreTabla() {
     assertEquals(1, resultados().getInteger("numero"));
   }
   
-  @Test public void testGetIntNumTabla() throws Exception {
+  @Test public void testGetIntNumTabla() {
     assertEquals(1, resultados().getInteger(2));
   }
   
-  @Test public void testGetFloatNombreTabla() throws Exception {
+  @Test public void testGetFloatNombreTabla() {
     assertEquals(11, resultados().getFloat("flotante"), e);
   }
   
-  @Test public void testGetFloatNumTabla() throws Exception {
+  @Test public void testGetFloatNumTabla() {
     assertEquals(11, resultados().getFloat(3), e);
   }
   
-  @Test public void testGetStringNombreTabla() throws Exception {
+  @Test public void testGetStringNombreTabla() {
     Resultados r = resultados();
     assertEquals("a", r.getString("texto"));
   }
   
-  @Test public void testGetStringNumTabla() throws Exception {
+  @Test public void testGetStringNumTabla() {
     assertEquals("a", resultados().getString(1));
   }
   
   // Pruebo Metodos de Lectura de Datos Con Errores
   @Test
-  public void testGetBooleanError() throws Exception {
+  public void testGetBooleanError() {
     Boolean resultado = resultados().getBoolean("texto");
     assertEquals(false, resultado);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetBooleanExcepcion() throws Exception {
+  public void testGetBooleanExcepcion() {
     resultados().getBoolean("boolea");
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetStringError() throws Exception {
+  public void testGetStringError() {
     resultados().getString(2);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetStringErrorColumna() throws Exception {
+  public void testGetStringErrorColumna() {
     resultados().getString(100);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetStringExcepcion() throws Exception {
+  public void testGetStringExcepcion() {
     resultados().getString("cosa");
   }
   
   @Test (expected = IllegalArgumentException.class)
-  public void testGetIntegerError() throws Exception{
+  public void testGetIntegerError() {
     resultados().getInteger(1);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetIntegerErrorColumna() throws Exception{
+  public void testGetIntegerErrorColumna() {
     resultados().getInteger(100);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetIntegerExcepcion() throws Exception {
+  public void testGetIntegerExcepcion() {
     resultados().getInteger("num");
   }
   
   @Test (expected = IllegalArgumentException.class)
-  public void testGetFloatError() throws Exception{
+  public void testGetFloatError() {
     resultados().getFloat(1);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetFloatErrorColumna() throws Exception{
+  public void testGetFloatErrorColumna() {
     resultados().getFloat(100);
   }
   
   @Test (expected = RuntimeException.class)
-  public void testGetFloatExcepcion() throws Exception {
+  public void testGetFloatExcepcion() {
     resultados().getFloat("flot");
   }
+
   /**
-   * Creo una BD en memoria
-   *
-   * @return Resultado de una query
+   * @return Resultados de una query
    */
-  public Resultados resultados() throws Exception {
+  public Resultados resultados() {
     Connection cnn = Conexion.withSqlite();
-    cnn.prepareStatement("CREATE TABLE Tipos(texto varchar(40), numero int, flotante float, booleano bit);").execute();
-    cnn.prepareStatement("INSERT INTO Tipos VALUES ('a', 1, 11, 1)").execute();
-    return new Resultados(cnn.prepareStatement("SELECT * FROM Tipos").executeQuery());
+    try {
+      cnn.prepareStatement("CREATE TABLE Tipos(texto varchar(40), numero int, flotante float, booleano bit);").execute();
+      cnn.prepareStatement("INSERT INTO Tipos VALUES ('a', 1, 11, 1)").execute();
+      return new Resultados(cnn.prepareStatement("SELECT * FROM Tipos").executeQuery());
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

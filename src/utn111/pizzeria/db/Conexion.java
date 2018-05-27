@@ -36,16 +36,16 @@ public class Conexion {
    * @link https://bitbucket.org/xerial/sqlite-jdbc/downloads/
    */
   public static Conexion sqlite() {
+    return new Conexion(withSqlite());
+  }
+
+  static Connection withSqlite() {
     try {
-      return new Conexion(withSqlite());
+      return DriverManager.getConnection("jdbc:sqlite::memory:");
     }
     catch (SQLException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  static Connection withSqlite() throws SQLException {
-    return DriverManager.getConnection("jdbc:sqlite::memory:");
   }
 
 }
