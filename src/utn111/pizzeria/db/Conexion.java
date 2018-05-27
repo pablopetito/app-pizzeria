@@ -5,19 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
+
   private final Connection cnn;
-  
+
+  private Conexion(Connection cnn) {
+    this.cnn = cnn;
+  }
+
   public Conexion(String host, String user, String pass) {
     try {
       cnn = DriverManager.getConnection(host, user, pass);
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
-  
-  public Conexion(String host) {
-    try {
-      cnn = DriverManager.getConnection(host);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
@@ -30,4 +27,25 @@ public class Conexion {
   public int execute(String sql) {
     return preparar(sql).execute();
   }
+
+  /**
+   * Crea una conexion sqlite en memoria
+   *
+   * Necesita el jar del conector de sqlite para funcionar correctamente
+   *
+   * @link https://bitbucket.org/xerial/sqlite-jdbc/downloads/
+   */
+  public static Conexion sqlite() {
+    try {
+      return new Conexion(withSqlite());
+    }
+    catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  static Connection withSqlite() throws SQLException {
+    return DriverManager.getConnection("jdbc:sqlite::memory:");
+  }
+
 }

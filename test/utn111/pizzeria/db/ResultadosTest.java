@@ -1,10 +1,10 @@
 package utn111.pizzeria.db;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import org.junit.Test;
-import utn111.pizzeria.db.Resultados;
 
 public class ResultadosTest {
 
@@ -127,8 +127,7 @@ public class ResultadosTest {
    * @return Resultado de una query
    */
   public Resultados resultados() throws Exception {
-    final String host = "jdbc:sqlite::memory:";
-    Connection cnn = DriverManager.getConnection(host);
+    Connection cnn = Conexion.withSqlite();
     cnn.prepareStatement("CREATE TABLE Tipos(texto varchar(40), numero int, flotante float, booleano bit);").execute();
     cnn.prepareStatement("INSERT INTO Tipos VALUES ('a', 1, 11, 1)").execute();
     return new Resultados(cnn.prepareStatement("SELECT * FROM Tipos").executeQuery());

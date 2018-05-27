@@ -9,8 +9,7 @@ public class ConexionTest {
    * Pruebo una conexion con una BD en memoria.
    */
   @Test public void testUnaConexion() {
-    final String host = "jdbc:sqlite::memory:";
-    Conexion c = new Conexion(host);
+    Conexion c = Conexion.sqlite();
     c.preparar("CREATE TABLE Tipos(texto varchar(40), numero int, flotante float)");
   }
 }
