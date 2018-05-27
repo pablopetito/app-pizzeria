@@ -7,6 +7,16 @@ import org.junit.Test;
 
 public class InsertBuilderTest {
 
+  @Test public void testInsertConColumnas() {
+    final String expSql = "insert into persona(nombre, id) values (?, ?)";
+    final String sql = Query.insert("persona")
+        .columnas("nombre", "id")
+        .build()
+        .getSql();
+
+    assertEquals(expSql, sql);
+  }
+
   @Test public void testInsertValuesPrepared() {
     final String expSql = "insert into una.tabla values (?, ?, ?, ?)";
     final Query query = Query.insert("una.tabla")

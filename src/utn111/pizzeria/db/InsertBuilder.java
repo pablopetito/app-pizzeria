@@ -10,6 +10,7 @@ public class InsertBuilder extends QueryBuilder {
   }
 
   public InsertBuilder columnas(String...columnas) {
+    setOrCheckRecordSize(columnas.length);
     addColumns(columnas);
     return this;
   }
@@ -19,13 +20,17 @@ public class InsertBuilder extends QueryBuilder {
     return this;
   }
 
-  public InsertBuilder record(Object... columns) {
+  private void setOrCheckRecordSize (int size) {
     if (recordSize == 0) {
-      recordSize = columns.length;
+      recordSize = size;
     }
-    else if (recordSize != columns.length) {
+    else if (recordSize != size) {
       throw new IllegalArgumentException();
     }
+  }
+
+  public InsertBuilder record(Object... columns) {
+    setOrCheckRecordSize(columns.length);
     addParams(columns);
     recordCount += 1;
     return this;
@@ -41,7 +46,16 @@ public class InsertBuilder extends QueryBuilder {
   }
 
   private String buildInsert () {
-    return String.format("insert into %s", table);
+
+    final String columnas;
+
+    if (columns.size() > 0) {
+      columnas = String.format("(%s)", buildColumnas());
+    } else {
+      columnas = "";
+    }
+
+    return String.format("insert into %s%s", table, columnas);
   }
 
   private String buildValues() {
