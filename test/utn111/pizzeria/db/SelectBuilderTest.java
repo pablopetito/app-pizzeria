@@ -87,6 +87,15 @@ public class SelectBuilderTest {
     assertEquals(sql, query.getSql());
   }
 
+  @Test public void testQuerySelectConOffset() {
+    String sql = "select * from tabla as t1 limit 3, 30";
+    Query query = Query.select("tabla as t1")
+        .limit(3)
+        .offset(30)
+        .build();
+    assertEquals(sql, query.getSql());
+  }
+
   @Test public void testQuerySelectConGroup() {
     String sql = "select * from tabla as t1 group by column";
     Query query = Query.select("tabla as t1")

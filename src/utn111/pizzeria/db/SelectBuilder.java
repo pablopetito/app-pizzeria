@@ -4,34 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SelectBuilder {
+public class SelectBuilder extends QueryBuilder {
 
-  private final String tabla;
-  private final List<Object> column = new ArrayList<>();
-  private final List<Object> params = new ArrayList<>();
-  private final List<String> condicionesWhere = new ArrayList<>();
-  private final List<Object> orden = new ArrayList<>();
   private final List<Object> groups = new ArrayList<>();
-  private int limit;
-  private int offset;
 
-  public SelectBuilder(String from) {
-    tabla = from;
-    }
+  SelectBuilder(String from) {
+    super(from);
+  }
 
   public SelectBuilder columnas(Object... columnas) {
-    Collections.addAll(column,  columnas);
+    Collections.addAll(columns,  columnas);
     return this;
   }
 
   public SelectBuilder where(String condicion, Object... valores) {
-    condicionesWhere.add(condicion);
-    Collections.addAll(params, valores);
+    addWhere(condicion, valores);
     return this;
   }
 
-  public SelectBuilder orderBy(Object... valoresOrden) {
-    Collections.addAll(orden, valoresOrden);
+  public SelectBuilder orderBy(String... columnas) {
+    addOrderBy(columnas);
     return this;
   }
 
@@ -51,77 +43,28 @@ public class SelectBuilder {
     return this;
   }
 
-  public Query build() {
-    final String sql = buildSql();
-    return new Query(sql, params.toArray());
+  public SelectBuilder offset(int offset) {
+    this.offset = offset;
+    return this;
   }
 
-  private String buildSql() {
+  @Override
+  protected String buildSql() {
     final StringBuilder sb = new StringBuilder();
-    sb.append(buildQuery());
-    sb.append(buildColumnas());
+    sb.append(buildSelect());
     sb.append(buildFrom());
     sb.append(buildWhere());
     sb.append(buildGroup());
-    sb.append(buildOrden());
+    sb.append(buildOrderBy());
     sb.append(buildLimit());
     return sb.toString();
   }
 
-  private String buildQuery () {
-    return "select ";
-  }
-
-  private String buildFrom () {
-    return " from " + (new StringBuilder().append(tabla));
+  private String buildSelect() {
+    return String.format("select %s ", buildColumnas());
   }
 
   private String buildGroup() {
-    return buildGroupOrdenBy(" group by ", groups, "");
-  }
-
-  private String buildOrden() {
-    return buildGroupOrdenBy(" order by ", orden, "");
-  }
-
-  private String buildColumnas() {
-    return buildGroupOrdenBy("", column, "*");
-  }
-
-  private String buildWhere() {
-    String sql = "";
-    String andWhere = "where";
-    for (String cond : condicionesWhere) {
-      sql = sql+ String.format(" %s (%s)", andWhere, cond);
-      andWhere = "and";
-    }
-    return sql;
-  }
-
-  private String buildGroupOrdenBy(String opcion, List<Object> valores, String sqlInicial) {
-    String sql = sqlInicial;
-    boolean primero = true;
-    for (Object valor : valores) {
-      if (primero) {
-        sql = opcion;
-        primero = false;
-      } else {
-        sql = sql + ", ";
-      }
-      sql = sql + valor;
-    }
-    return sql;
-  }
-
-  private String buildLimit() {
-    final String template;
-    if (limit <= 0) {
-      template = "";
-    } else if (offset <=0) {
-             template = " limit %d";
-           } else {
-               template = " limit %d, %d";
-             }
-    return String.format(template, limit, offset);
+    return buildLista(groups, " group by ", "");
   }
 }
