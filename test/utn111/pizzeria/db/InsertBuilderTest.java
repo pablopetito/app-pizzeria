@@ -7,6 +7,16 @@ import org.junit.Test;
 
 public class InsertBuilderTest {
 
+  @Test public void testInsertValuesPrepared() {
+    final String expSql = "insert into una.tabla values (?, ?, ?, ?)";
+    final Query query = Query.insert("una.tabla")
+        .recordSize(4)
+        .build();
+
+    final String sql = query.getSql();
+    assertEquals(expSql, sql);
+  }
+
   @Test public void testInsertValueUnico() {
     final String expSql = "insert into persona value (?, ?)";
     final Object[] expParams = new Object[] { "pepe", 25, };

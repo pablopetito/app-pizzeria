@@ -14,14 +14,19 @@ public class InsertBuilder extends QueryBuilder {
     return this;
   }
 
-  public InsertBuilder record(Object... record) {
+  public InsertBuilder recordSize(int size) {
+    recordSize = size;
+    return this;
+  }
+
+  public InsertBuilder record(Object... columns) {
     if (recordSize == 0) {
-      recordSize = record.length;
+      recordSize = columns.length;
     }
-    else if (recordSize != record.length) {
+    else if (recordSize != columns.length) {
       throw new IllegalArgumentException();
     }
-    addParams(record);
+    addParams(columns);
     recordCount += 1;
     return this;
   }
@@ -44,12 +49,17 @@ public class InsertBuilder extends QueryBuilder {
     final StringBuilder sb = new StringBuilder();
 
     sb.append(
-      recordCount == 1 
+      recordCount == 1
         ? "value "
         : "values "
     );
 
-    for (int c = 0; c < recordCount; c += 1) {
+    final int count;
+
+    if (recordCount == 0) count = 1;
+    else count = recordCount;
+
+    for (int c = 0; c < count; c += 1) {
 
       if (c != 0) {
         sb.append(", ");
