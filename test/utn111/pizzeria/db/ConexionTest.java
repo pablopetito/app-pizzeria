@@ -1,5 +1,9 @@
 package utn111.pizzeria.db;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.sql.Connection;
+
 import org.junit.Test;
 import utn111.pizzeria.db.Conexion;
 
@@ -9,8 +13,7 @@ public class ConexionTest {
    * Pruebo una conexion con una BD en memoria.
    */
   @Test public void testUnaConexion() {
-    final String host = "jdbc:sqlite::memory:";
-    Conexion c = new Conexion(host);
-    c.preparar("CREATE TABLE Tipos(texto varchar(40), numero int, flotante float)");
+    Connection cnn = Conexion.withSqlite();
+    assertNotNull(cnn);
   }
 }
