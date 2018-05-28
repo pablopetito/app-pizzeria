@@ -25,7 +25,7 @@ public class UpdateBuilderTest {
 
   @Test public void testUpdateMultiple() {
     final String expSql = "update persona set edad = ?, dinero = ?, nombre = ?";
-    final Object[] expParams = new Object[] { 12, "carlos" };
+    final Object[] expParams = new Object[] { 12, 2.50f, "carlos" };
 
     final Query query = Query
         .update("persona")
@@ -256,7 +256,7 @@ public class UpdateBuilderTest {
 
   @Test public void testUpdateSimpleUnWhereOrderLimit() {
     final String expSql = "update persona set edad = ? where (dinero = ?) order by 1, 2 limit 6";
-    final Object[] expParams = new Object[] { 12, "carlos" };
+    final Object[] expParams = new Object[] { 12, 12.50f };
 
     final Query query = Query
         .update("persona")

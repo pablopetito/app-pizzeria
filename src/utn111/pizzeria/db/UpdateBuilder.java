@@ -17,7 +17,7 @@ public class UpdateBuilder extends QueryBuilder {
   }
 
   private String buildUpdate() {
-    return String.format("update %s  set ", table);
+    return String.format("update %s set ", table);
   }
 
   private String buildSets() {
