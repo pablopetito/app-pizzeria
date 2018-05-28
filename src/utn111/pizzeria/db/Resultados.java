@@ -128,10 +128,11 @@ public class Resultados {
       throw new RuntimeException(e);
     }
   }
-  
+
   private void validarColumna(int index, int... types) throws SQLException {
-    for(int type : types) {
-      if (data.getColumnType(index) == type) {
+    int columnType = data.getColumnType(index);
+    for (int type : types) {
+      if (columnType == type) {
         return;
       }
     }
