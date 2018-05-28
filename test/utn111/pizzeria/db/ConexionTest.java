@@ -71,5 +71,39 @@ public class ConexionTest {
     assertEquals(2, deleted);
   }
 
+  @Test public void testSelectString() {
+    final Conexion db = database();
+    final int selected = db.select("select count(*) from personas").getInteger(1);
+    assertEquals(3, selected);
+  }
+
+  @Test public void testSelectSimple() {
+    final Conexion db = database();
+    final int selected = db.select(
+      Query.select("personas")
+           .columnas("count(*)")
+    ).getInteger(1);
+    assertEquals(3, selected);
+  }
+
+  @Test public void testSelectUnString() {
+    final Conexion db = database();
+    final int selected = db.select(
+      Query.select("personas")
+           .columnas("count(*)")
+           .where("nombre = ?", "pepe")
+    ).getInteger(1);
+    assertEquals(1, selected);
+  }
+
+  @Test public void testSelectUnStringUnInt() {
+    final Conexion db = database();
+    final int selected = db.select(
+      Query.select("personas")
+           .columnas("count(*)")
+           .where("id = ? or nombre = ?", 2, "pepe")
+    ).getInteger(1);
+    assertEquals(2, selected);
+  }
 
 }

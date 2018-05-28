@@ -41,6 +41,18 @@ public class Conexion {
     return execute(sql.build());
   }
 
+  public Resultados select(String sql) {
+    return preparar(sql).select();
+  }
+
+  public Resultados select(Query query) {
+    return preparar(query).select();
+  }
+
+  public Resultados select(QueryBuilder sql) {
+    return select(sql.build());
+  }
+
   /**
    * Crea una conexion sqlite en memoria
    *
