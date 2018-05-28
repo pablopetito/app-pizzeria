@@ -62,11 +62,7 @@ public class InsertBuilder extends QueryBuilder {
 
     final StringBuilder sb = new StringBuilder();
 
-    sb.append(
-      recordCount == 1
-        ? "value "
-        : "values "
-    );
+    sb.append("values ");
 
     final int count;
 
