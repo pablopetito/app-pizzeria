@@ -47,7 +47,11 @@ public abstract class QueryBuilder {
   }
 
   protected String buildColumnas() {
-    return buildLista(columns, "", "*");
+    return buildColumnas(null);
+  }
+
+  protected String buildColumnas(String itemTemplate) {
+    return buildLista(columns, "", "*", itemTemplate);
   }
 
   protected String buildWhere() {
@@ -84,8 +88,15 @@ public abstract class QueryBuilder {
   }
 
   protected String buildLista(final List<Object> values,
+      final String init,
+      final String whenEmpty) {
+    return buildLista(values, init, whenEmpty, null);
+  }
+
+  protected String buildLista(final List<Object> values,
                               final String init,
-                              final String whenEmpty) {
+                              final String whenEmpty,
+                              final String itemTemplate) {
     StringBuilder sql = null;
 
     for (Object item : values) {
@@ -94,6 +105,11 @@ public abstract class QueryBuilder {
       } else {
         sql.append(", ");
       }
+
+      if (itemTemplate != null) {
+        item = String.format(itemTemplate, item);
+      }
+
       sql.append(item);
     }
 

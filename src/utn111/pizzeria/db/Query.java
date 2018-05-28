@@ -29,4 +29,8 @@ public class Query {
   public static InsertBuilder insert(String into) {
     return new InsertBuilder(into);
   }
+
+  public static UpdateBuilder update(String table) {
+    return new UpdateBuilder(table);
+  }
 }

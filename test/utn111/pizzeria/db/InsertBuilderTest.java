@@ -28,7 +28,7 @@ public class InsertBuilderTest {
   }
 
   @Test public void testInsertValueUnico() {
-    final String expSql = "insert into persona value (?, ?)";
+    final String expSql = "insert into persona values (?, ?)";
     final Object[] expParams = new Object[] { "pepe", 25, };
     final Query query = Query.insert("persona")
         .record("pepe", 25)
