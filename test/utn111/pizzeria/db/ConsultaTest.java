@@ -97,7 +97,77 @@ public class ConsultaTest {
     c.param(2);
     assertEquals(2, c.execute());
   }
+
+  @Test public void testParamsArrayUnInt () {
+    final int deleted = consulta("delete from tipos where numero = ?")
+       .params(new Integer[] { 2 })
+       .execute();
+
+    assertEquals(1, deleted);
+  }
+
+  @Test public void testParamsArrayDosInts () {
+    final int deleted = consulta("delete from tipos where numero = ? or numero = ?")
+       .params(new Integer[] { 1, 2 })
+       .execute();
+
+    assertEquals(2, deleted);
+  }
+
+  @Test public void testParamsArrayUnIntUnString () {
+    final int deleted = consulta("delete from tipos where numero = ? or texto = ?")
+       .params(new Object[] { 1, "b" })
+       .execute();
+
+    assertEquals(2, deleted);
+  }
+
+  @Test public void testParamsArrayUnStringUnFloat () {
+    final int deleted = consulta("delete from tipos where flotante = ? or texto = ?")
+       .params(new Object[] { 11.0f, "b" })
+       .execute();
+
+    assertEquals(2, deleted);
+  }
   
+  @Test public void testParamsArrayUnBoxInt () {
+    final int deleted = consulta("delete from tipos where numero = ?")
+       .params(new Integer[] { new Integer(2) })
+       .execute();
+
+    assertEquals(1, deleted);
+  }
+
+  @Test public void testParamsArrayDosBoxInts () {
+    final int deleted = consulta("delete from tipos where numero = ? or numero = ?")
+       .params(new Integer[] { new Integer(1), new Integer(2) })
+       .execute();
+
+    assertEquals(2, deleted);
+  }
+
+  @Test public void testParamsArrayUnBoxIntUnString () {
+    final int deleted = consulta("delete from tipos where numero = ? or texto = ?")
+       .params(new Object[] { new Integer(1), "b" })
+       .execute();
+
+    assertEquals(2, deleted);
+  }
+
+  @Test public void testParamsArrayUnStringUnBoxFloat () {
+    final int deleted = consulta("delete from tipos where flotante = ? or texto = ?")
+       .params(new Object[] { new Float(11.0f), "b" })
+       .execute();
+
+    assertEquals(2, deleted);
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void testParamsTipoInvalido () {
+    consulta("delete from tipos where numero = ?")
+       .params(new Object[] { true });
+  }
+
   /**
    * Creo una BD en memoria
    *
