@@ -113,4 +113,22 @@ public class Consulta {
     }
     return new Resultados(rs);
   }
+
+  public Consulta params(Object[] params) {
+    for (Object p : params) {
+      if (p instanceof Integer) {
+        param((int) p);
+      }
+      else if (p instanceof Float) {
+        param((float) p);
+      }
+      else if (p instanceof String) {
+        param((String) p);
+      }
+      else {
+        throw new IllegalArgumentException();
+      }
+    }
+    return this;
+  }
 }
